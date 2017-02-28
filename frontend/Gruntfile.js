@@ -8,6 +8,7 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+  grunt.loadNpmTasks('grunt-connect-proxy');
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
@@ -71,6 +72,30 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies:[
+        {
+          context: '/api',
+          host: '0.0.0.0',
+          port: 8000,
+          https: false,
+          xforward: false
+        },
+        {
+          context: '/media',
+          host: '0.0.0.0',
+          port: 8000,
+          https: false,
+          changeOrigin: false
+        },
+        {
+          context: '/static',
+          host: '0.0.0.0',
+          port: 8000,
+          https: false,
+          changeOrigin: false
+        }
+
+      ],
       livereload: {
         options: {
           open: true,
