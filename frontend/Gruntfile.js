@@ -8,11 +8,11 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-  grunt.loadNpmTasks('grunt-connect-proxy');
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
+  grunt.loadNpmTasks('grunt-connect-proxy');
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729
       },
       proxies:[
@@ -99,15 +99,14 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
+          middleware: function(connect) {
+            var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+            return middlewares.concat(
               connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
+              connect().use('/bower_components', connect.static('./bower_components')),
+              connect().use('/app/styles', connect.static('./app/styles')),
               connect.static(appConfig.app)
-            ];
+            );
           }
         }
       },
@@ -422,6 +421,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'configureProxies:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
