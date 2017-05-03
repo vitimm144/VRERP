@@ -9,6 +9,7 @@
  */
 angular.module('frontendApp')
   .controller('AboutCtrl', function ($scope) {
+          console.log('about ctrl');
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
