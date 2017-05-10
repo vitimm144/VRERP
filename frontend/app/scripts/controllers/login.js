@@ -16,14 +16,14 @@ angular.module('frontendApp')
   AUTH_TOKEN_PATH,
   AUTH_LOGOUT_PATH) {
     var login_ctrl = this;
+    $scope.loggedIn = true;
     console.log('login ctrl');
     //function receive a callback as a parameter for execute any function that
     //user pass to it, and receive a array of parameters to be used in this 
     //callback
-    $scope.loggedIn = true;
     
     $scope.$on('event:loginConfirmed', function(evt){
-            console.log('enventLoginConfirmed');
+      console.log('enventLoginConfirmed');
       $scope.loggedIn = true;
     });
 //    login_ctrl.$on('event:loginRequired', function(evt){
@@ -31,8 +31,9 @@ angular.module('frontendApp')
 //      $scope.loggedIn = false;
 //    });
     $scope.$on('event:loginRequired', function(evt){
-            console.log('scope enventLoginRequired');
+      console.log('scope enventLoginRequired');
       $scope.loggedIn = false;
+      AuthService.setToken( '' );
     });
     login_ctrl.user = {
       username : AuthService.getUserName()
@@ -45,8 +46,10 @@ angular.module('frontendApp')
             console.log('login');
       // Now, we need to get a token from the backend
       $http.post(AUTH_TOKEN_PATH, login_ctrl.user, config )
-        .success(function(data, status){
-        if(status === 200 && data.token){
+        .then(function(data){
+                      console.log(data.data);
+                      console.log(data.status);
+        if(data.status === 200 && data.data.token){
           
           //starting event to unlock app
 //          authService.loginConfirmed(data);
@@ -55,21 +58,21 @@ angular.module('frontendApp')
           $rootScope.$broadcast('event:loginConfirmed');
               console.log('success');
               console.log(data);
-          AuthService.setToken( data.token );
+          AuthService.setToken( data.data.token );
           AuthService.setUserName( login_ctrl.user.username );
 
           //Getting user permissions.
 //          UserPermissions.get( $scope.user.username );
 
           //optional callback to execute anything  
-          if (callback) {
-            callback(param);
-          }
+//          if (callback) {
+//            callback(param);
+//          }
         }
       });
-    }
+    };
     login_ctrl.logout = function(callback, param){
-      $http.get(AUTH_LOGOUT_PATH).success(function(){
+      $http.get(AUTH_LOGOUT_PATH).then(function(){
         $rootScope.$broadcast('event:loginRequired');
 //        if ( $state && $state.$current.name ) {
 //          $state.reload( $state.$current.name );

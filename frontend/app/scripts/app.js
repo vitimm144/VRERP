@@ -9,14 +9,15 @@
  * Main module of the application.
  */
 angular.module('frontendApp', [
-    'ngAnimate',
+//    'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     'frontendAuthApp',
     'ngTouch',
-    'ui.router'
+    'ui.router',
+    'datatables'
   ])
 .run(function ($rootScope,AuthService) {
   console.log('run');

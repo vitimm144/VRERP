@@ -1,5 +1,5 @@
 angular.module('frontendApp')
-  .controller('MainCtrl', function (
+  .controller('UserCtrl', function (
   $rootScope,
   $scope,
   $http,
@@ -12,7 +12,8 @@ angular.module('frontendApp')
   console.log('user_ctrl');
   user_ctrl.gridOptions = {};
   $http.get('/api/users').then(function(response){
-    user_ctrl.gridOptions['data'] = response.data
+    user_ctrl.users = response.data.results;
+    console.log(user_ctrl.users);
   }, function(){
             console.log('erro ao pegar users');
   });

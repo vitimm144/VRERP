@@ -1,3 +1,22 @@
 <div  ng-grid="user_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> Usuários <i class="fa fa-plus-circle"></i> </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in user_ctrl.users">
+            <td>{{ user.url }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        </tbody>
+    </table>
   
 </div>

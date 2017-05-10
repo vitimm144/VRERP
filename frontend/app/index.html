@@ -8,22 +8,25 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/datatables.net-dt/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css" />
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <!--<link rel="stylesheet" href="styles/main.css">-->
     <!-- endbuild -->
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>VR ERP</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/bootstrap.css" rel="stylesheet">
 
     <!-- Bootstrap Core CSS RTL-->
-    <link href="styles/bootstrap-rtl.min.css" rel="stylesheet">
+    <!--<link href="styles/bootstrap-rtl.css" rel="stylesheet">-->
 
     <!-- Custom CSS -->
     <link href="styles/sb-admin.css" rel="stylesheet">
-    <link href="styles/sb-admin-rtl.css" rel="stylesheet">
+    <!--<link href="styles/sb-admin-rtl.css" rel="stylesheet">-->
 
     <!-- Morris Charts CSS -->
     <link href="styles/plugins/morris.css" rel="stylesheet">
@@ -38,13 +41,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="frontendApp" ng-controller="LoginCtrl as login_ctrl" >
+  <body ng-app="frontendApp" ng-cloak ng-controller="LoginCtrl as login_ctrl" >
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-      <div class="jumbotron" ng-if="!loggedIn">
+      <div class="jumbotron" ng-show="!loggedIn">
         <div class="container">
           <div class="col-md-6 col-md-offset-3 ">
             {{ 'You are logged: ' + loggedIn }}
@@ -218,7 +221,7 @@
                         <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="/#/users"><i class="fa fa-fw fa-user"></i> Usuários</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
@@ -227,7 +230,7 @@
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
                                 <a href="#">Dropdown Item</a>
@@ -292,6 +295,19 @@
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-data-grid/dist/dataGrid.js"></script>
+    <script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
