@@ -61,6 +61,26 @@ angular.module('frontendApp', [
             authorize: true
           }
         }
+      }).state('users.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: 'views/form.html',
+            controller: 'UserEditCtrl',
+            controllerAs: 'user_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('users.edit', {
+        url: '/:userId',
+        views:{
+          'form':{
+            templateUrl: 'views/form.html',
+            controller: 'UserEditCtrl',
+            controllerAs: 'user_edit_ctrl',
+            authorize: true
+          }
+        }
       })
       .state('about',{
         url: '/about',
