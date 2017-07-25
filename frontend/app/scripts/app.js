@@ -17,6 +17,7 @@ angular.module('frontendApp', [
     'frontendAuthApp',
     'ngTouch',
     'ui.router',
+    'ngFileUpload',
     'datatables'
   ])
 .run(function ($rootScope,AuthService) {
@@ -51,6 +52,39 @@ angular.module('frontendApp', [
           }
         }
       })
+      //PRODUCTS
+      .state('products', {
+        url: '/products',
+        views:{
+          'content': {
+            templateUrl: '../products/views/products.html',
+            controller: 'ProductCtrl',
+            controllerAs: 'product_ctrl',
+            authorize: true
+          }
+        }
+      }).state('products.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: '../products/views/product_form.html',
+            controller: 'ProductEditCtrl',
+            controllerAs: 'product_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('products.edit', {
+        url: '/:productId',
+        views:{
+          'form':{
+            templateUrl: '../products/views/product_form.html',
+            controller: 'ProductEditCtrl',
+            controllerAs: 'product_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
+      //USERS
       .state('users', {
         url: '/users',
         views:{

@@ -1,0 +1,43 @@
+<div ui-view="form" ng-cloak ng-grid="product_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Produtos
+      <a href="/#/products/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descrição</th>
+        <th>Tamanho</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="product in product_ctrl.products">
+        <td>{{ product.code}}</td>
+        <td>{{ product.description}}</td>
+        <td>{{ product.size}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/products/{{product.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="product_ctrl.excluir('/api/products/' + product.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

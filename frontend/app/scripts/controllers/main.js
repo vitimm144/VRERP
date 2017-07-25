@@ -26,10 +26,10 @@ angular.module('frontendApp')
             console.log('rootenventLoginRequired');
       $scope.loggedIn = false;
     });
-//    main.$on('event:loginRequired', function(evt){
-//            console.log('main enventLoginRequired');
-//      $scope.loggedIn = false;
-//    });
+    $rootScope.$on('event:loginRequired', function(evt){
+      console.log('main enventLoginRequired');
+      $rootScope.loggedIn = false;
+    });
     $scope.$on('event:loginRequired', function(evt){
             console.log('scope enventLoginRequired');
       $scope.loggedIn = false;
