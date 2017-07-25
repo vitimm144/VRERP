@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+PROJECT_ROOT = Path(__file__).parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'users',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -153,9 +155,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = str(PROJECT_ROOT.joinpath('media'))
+
+
 STATIC_ROOT = '/home/victor/devel/vr_erp/backend/static'
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+# Add it on your settings.py file
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
