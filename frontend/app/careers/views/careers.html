@@ -1,0 +1,41 @@
+<div ui-view="form" ng-cloak ng-grid="career_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Cargos
+      <a href="/#/careers/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="career in career_ctrl.careers">
+        <td>{{ career.title}}</td>
+        <td>{{ career.description}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/careers/{{career.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="career_ctrl.excluir('/api/careers/' + career.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

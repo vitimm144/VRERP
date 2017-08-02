@@ -84,6 +84,38 @@ angular.module('frontendApp', [
           }
         }
       })
+      //CAREERS
+      .state('careers', {
+        url: '/careers',
+        views:{
+          'content': {
+            templateUrl: '../careers/views/careers.html',
+            controller: 'CareerCtrl',
+            controllerAs: 'career_ctrl',
+            authorize: true
+          }
+        }
+      }).state('careers.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: '../careers/views/career_form.html',
+            controller: 'CareerEditCtrl',
+            controllerAs: 'career_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('careers.edit', {
+        url: '/:careerId',
+        views:{
+          'form':{
+            templateUrl: '../careers/views/career_form.html',
+            controller: 'CareerEditCtrl',
+            controllerAs: 'career_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
       //USERS
       .state('users', {
         url: '/users',
