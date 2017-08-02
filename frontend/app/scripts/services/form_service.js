@@ -7,7 +7,7 @@ angular.module('frontendApp').service(
       // return a Promise object so that the caller can handle success/failure
     var method = formData.id ? 'PATCH' : 'POST';
     if (formData.id){
-      url += formData.id;
+      url += formData.id + '/';
     }
     return $http({
       method: method,

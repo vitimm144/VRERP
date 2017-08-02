@@ -72,20 +72,18 @@
               <input
                 type="file"
                 ngf-select
-                ng-model="product_edit_ctrl.product.picture"
+                ng-model="product_edit_ctrl.file"
                 name="file"
                 ngf-pattern="'image/*'"
                 ngf-accept="'image/*'" 
                 ngf-max-size="20MB" 
                 ngf-min-height="100"
                 ngf-resize="{width: 100, height: 100}"/>
-                           
-              
             </div>
                         
             <button
               type="button"
-              ng-click="product_edit_ctrl.submit(product_edit_ctrl.product.picture)"
+              ng-click="product_edit_ctrl.submit(product_edit_ctrl.file)"
               class="btn btn-default">Enviar</button>
             <button type="reset" class="btn btn-default">Reset</button>
 
