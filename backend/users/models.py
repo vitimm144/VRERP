@@ -28,3 +28,19 @@ class Career(models.Model):
         ordering = ['title']
 
 
+class Employee(models.Model):
+    picture = models.ImageField(null=True, verbose_name="Foto", upload_to='employees/')
+    name = models.CharField(verbose_name="Nome", max_length=255)
+    cpf = models.CharField(verbose_name="CPF", max_length=16)
+    rg = models.CharField(verbose_name="RG", max_length=16)
+    address = models.TextField(null=True, blank=True, verbose_name="Endereço")
+    code = models.CharField(unique=True, verbose_name="Código", max_length=255)
+    salary = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Salário")
+    career = models.ForeignKey('Career', verbose_name='Função')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name', 'code']
+

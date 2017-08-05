@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from users.models import Career
+from users.models import Employee
 
 
 # Serializers define the API representation.
@@ -31,4 +32,10 @@ class CareerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Career
+        fields = '__all__'
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
         fields = '__all__'

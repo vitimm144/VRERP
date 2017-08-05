@@ -18,7 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework import routers
 from users.views import UserViewSet
-from users.views import CarrerViewSet
+from users.views import EmployeeViewSet
+from users.views import CareerViewSet
 from products.views import ProductViewSet
 from rest_framework.authtoken import views
 from django.conf import settings
@@ -27,7 +28,8 @@ from django.conf import settings
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'products', ProductViewSet)
-router.register(r'careers', CarrerViewSet)
+router.register(r'careers', CareerViewSet)
+router.register(r'employees', EmployeeViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
