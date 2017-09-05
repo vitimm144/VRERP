@@ -1,0 +1,43 @@
+<div ui-view="form" ng-cloak ng-grid="employee_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Funcionários
+      <a href="/#/employees/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nome</th>
+        <th>Função</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in employee_ctrl.employees">
+        <td>{{ employee.code}}</td>
+        <td>{{ employee.name}}</td>
+        <td>{{ employee.career}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/employees/{{employee.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="employee_ctrl.excluir('/api/employees/' + employee.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
