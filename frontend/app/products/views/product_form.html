@@ -31,7 +31,7 @@
             <img ng-src="{{product_edit_ctrl.product.picture}}">
           </div>
 
-          <form ng-app="fileUpload" role="form">
+          <form ng-app="fileUpload" role="form" name="product_form">
 
             <div class="form-group">
               <label>Descrição</label>
@@ -54,6 +54,15 @@
               <input
                 type="number"
                 ng-model="product_edit_ctrl.product.amount"
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Preço</label>
+              
+              <input
+                name="price"
+                id="price"
+                ng-model="product_edit_ctrl.price.value"
                 class="form-control">
             </div>
             

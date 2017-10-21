@@ -26,6 +26,9 @@ angular.module('frontendApp')
     'G',
     'GG'
   ];
+  product_edit_ctrl.price = {
+    value : '',
+  }
   
   if ($stateParams.productId){
     product_edit_ctrl.url += $stateParams.productId + '/';
@@ -33,6 +36,12 @@ angular.module('frontendApp')
     product_edit_ctrl.method = 'PUT';
     $http.get(product_edit_ctrl.url).then(function(data){
       console.log(data);
+      try{
+        product_edit_ctrl.price = data.data.products[0];
+      }catch(err){
+                console.log("Errrrrrou");
+                console.log(err);
+      }
       product_edit_ctrl.product = data.data;
     });
   }else{
@@ -41,6 +50,9 @@ angular.module('frontendApp')
   }
   
   product_edit_ctrl.submit = function(file) {
+    if($scope.product_form.price.$dirty){
+      product_edit_ctrl.product.products = [product_edit_ctrl.price];
+    }
     
     if (file){
       file.upload = Upload.upload({
