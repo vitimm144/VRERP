@@ -58,3 +58,84 @@ class Price(models.Model):
         ordering = ["value"]
 
 
+PAY_MODE = (
+        ('D', 'DÉBITO'),
+        ('CA', 'CRÉDITO À VISTA'),
+        ('CP', 'CRÉDITO PARCELADO'),
+        ('A', 'À VISTA'),
+        ('CHA', 'CHEQUE À VISTA'),
+        ('CHP', 'CHEQUE PARCELADO'),
+        ('VP', 'VALE PARCELADO'),
+        ('V', 'VALE'),
+
+    )
+
+
+class Plot(models.Model):
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField('Modificado em', auto_now=True)
+    date = models.DateTimeField('Data')
+    plot = models.IntegerField(verbose_name='Parcela')
+    ploted_value = models.DecimalField(
+        decimal_places=2,
+        max_digits=7,
+        verbose_name="Valor da parcela"
+    )
+
+
+class Pay(models.Model):
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField('Modificado em', auto_now=True)
+    value = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Valor")
+    mode = models.CharField(choices=PAY_MODE, verbose_name="Modo", max_length=3)
+    plots_amount = models.IntegerField(
+        verbose_name='Número de parcelas',
+        null=True,
+        blank=True
+    )
+    plots = models.ManyToManyField(
+        'Plot',
+        related_name='plots',
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return str(self.value)
+
+    class Meta:
+        ordering = ["value"]
+
+
+class ProductSale(models.Model):
+    product = models.ForeignKey(
+        "Product",
+        verbose_name="Produto",
+        related_name="product_sale",
+        on_delete=models.DO_NOTHING
+    )
+    price = models.ForeignKey(
+        "Price",
+        verbose_name="Produto",
+        related_name="price_sale",
+        on_delete=models.DO_NOTHING
+    )
+
+    def __str__(self):
+        self.product.description
+
+
+class Sale(models.Model):
+
+    STATUS = (
+        ('C', 'CANCELADA'),
+        ('F', 'FINALIZADA'),
+
+    )
+
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField('Modificado em', auto_now=True)
+    products = models.ManyToManyField("ProductSale")
+    payments = models.ManyToManyField("Pay", related_name='payments')
+    status = models.CharField(choices=STATUS, verbose_name="Status", max_length=3)
+
