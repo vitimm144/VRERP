@@ -135,7 +135,33 @@ class Sale(models.Model):
 
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
-    products = models.ManyToManyField("ProductSale")
+    products = models.ManyToManyField("ProductSale", related_name='products')
     payments = models.ManyToManyField("Pay", related_name='payments')
+    saleswoman = models.ForeignKey(
+        "users.Employee",
+        related_name='employee',
+        on_delete=models.DO_NOTHING,
+        verbose_name="Vendedora"
+    )
     status = models.CharField(choices=STATUS, verbose_name="Status", max_length=3)
+    deduction = models.DecimalField(
+        verbose_name="Desconto",
+        null=True,
+        blank=True,
+        max_digits=7,
+        decimal_places=3
+    )
+    client = models.ForeignKey(
+        "core.Client",
+        verbose_name="Cliente",
+        null=True,
+        blank=True,
+        related_name="client",
+        on_delete=models.DO_NOTHING
+    )
 
+    def __str__(self):
+        return self.status
+
+    class Meta:
+        ordering = ['created', 'status']

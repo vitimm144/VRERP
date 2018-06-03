@@ -21,6 +21,7 @@ from users.views import UserViewSet
 from users.views import EmployeeViewSet
 from users.views import CareerViewSet
 from products.views import ProductViewSet
+from products.views import SaleViewSet
 from core.views import ClientViewSet
 from rest_framework.authtoken import views
 from django.conf import settings
@@ -32,6 +33,7 @@ router.register(r'products', ProductViewSet)
 router.register(r'careers', CareerViewSet)
 router.register(r'employees', EmployeeViewSet)
 router.register(r'clients', ClientViewSet)
+router.register(r'sales', SaleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
