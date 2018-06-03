@@ -1,0 +1,1 @@
+web: gunicorn vr_erp.wsgi --log-file -

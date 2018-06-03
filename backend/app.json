@@ -1,0 +1,22 @@
+{
+  "name": "VRERP",
+  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "image": "heroku/python",
+  "repository": "https://bitbucket.org/VictorRAS/vr_erp/src/master/backend",
+  "keywords": ["python", "django" ],
+  "addons": [ "heroku-postgresql" ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "jt4oohsb=2#-%s50^lcos7o3+1h&rqf6007z3s@qp1q^ic8ipu",
+      "generator": "secret"
+    }
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "python manage.py collectstatic --noinput",
+        "test": "python manage.py test"
+      }
+    }
+  }
+}
