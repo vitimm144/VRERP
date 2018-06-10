@@ -168,6 +168,7 @@ class ProductSaleSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'product',
+            'amount',
             'price'
         )
 

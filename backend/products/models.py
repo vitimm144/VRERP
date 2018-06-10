@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class PriceManager(models.Manager):
@@ -121,10 +123,14 @@ class ProductSale(models.Model):
         related_name="price_sale",
         on_delete=models.DO_NOTHING
     )
+    amount = models.IntegerField(
+        verbose_name='Quantidade',
+        default=1
+    )
     product_sale = models.ForeignKey("Sale", related_name='products', default=None, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        self.product.description
+        return self.product.description
 
 
 class Sale(models.Model):
@@ -165,3 +171,12 @@ class Sale(models.Model):
 
     class Meta:
         ordering = ['created', 'status']
+
+
+@receiver(post_save, sender=Sale)
+def save_profile(sender, instance, **kwargs):
+    # Decrementando a quantidade de produtos no estoque ao final de cada venda.
+    for psale in instance.products.all():
+        psale.product.amount = psale.product.amount - psale.amount
+        psale.product.save()
+
