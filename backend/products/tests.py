@@ -47,6 +47,7 @@ class ProductTestCase(APITestCase):
             "products": [
                 {
                     "value": "20.00",
+                    "in_use": True
                 },
 
             ],
@@ -59,7 +60,7 @@ class ProductTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         value = response.data
 
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         price = value.get('products')
         self.assertEqual(price[0].get('value'), "20.00")
 

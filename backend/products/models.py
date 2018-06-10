@@ -81,6 +81,12 @@ class Plot(models.Model):
         max_digits=7,
         verbose_name="Valor da parcela"
     )
+    plot_pay = models.ForeignKey(
+        'Pay',
+        related_name='plots',
+        null=True,
+        blank=True
+    )
 
 
 class Pay(models.Model):
@@ -93,12 +99,7 @@ class Pay(models.Model):
         null=True,
         blank=True
     )
-    plots = models.ManyToManyField(
-        'Plot',
-        related_name='plots',
-        null=True,
-        blank=True
-    )
+    pay_sale = models.ForeignKey("Sale", related_name='payments', default=None, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return str(self.value)
@@ -120,6 +121,7 @@ class ProductSale(models.Model):
         related_name="price_sale",
         on_delete=models.DO_NOTHING
     )
+    product_sale = models.ForeignKey("Sale", related_name='products', default=None, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         self.product.description
@@ -135,8 +137,6 @@ class Sale(models.Model):
 
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
-    products = models.ManyToManyField("ProductSale", related_name='products')
-    payments = models.ManyToManyField("Pay", related_name='payments')
     saleswoman = models.ForeignKey(
         "users.Employee",
         related_name='employee',

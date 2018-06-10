@@ -4,6 +4,7 @@ from products.models import Price, Pay, Plot
 from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
+from pprint import pprint
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -63,7 +64,8 @@ class ProductSerializer(serializers.ModelSerializer):
         return self.create_update(instance, validated_data)
 
     def create_update(self, instance, validated_data):
-
+        # print()
+        # pprint(validated_data)
         products = validated_data.pop('products', [])
 
         if not instance:
@@ -72,7 +74,7 @@ class ProductSerializer(serializers.ModelSerializer):
         else:
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
-
+        # import ipdb; ipdb.set_trace()
         if products:
             with transaction.atomic():
                 # Treatment to delete campaign field.
@@ -102,14 +104,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class PaySerializer(serializers.ModelSerializer):
-    plots = serializers.PrimaryKeyRelatedField(
-        required=True,
-        many=True,
-        queryset=Plot.objects.all()
-    )
+    plots = PlotSerializer(many=True, required=False)
 
     class Meta:
-        model = Sale
+        model = Pay
         fields = (
             'id',
             'plots',
@@ -132,15 +130,32 @@ class PaySerializer(serializers.ModelSerializer):
         plots = validated_data.pop('plots', None)
 
         if not instance:
-            instance = super(PlotSerializer, self).create(validated_data)
+            instance = super(PaySerializer, self).create(validated_data)
         else:
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
 
-        if plots is not None:
-            if instance.products.count():
-                instance.plots.remove(*instance.plots.all())
-            instance.products.add(*plots)
+        if plots:
+            with transaction.atomic():
+                # Treatment to delete campaign field.
+                ids = []
+                for x in plots:
+                    identifier = x.get('id')
+                    if identifier:
+                        ids.append(identifier)
+                instance.plots.exclude(pk__in=ids).delete()
+
+                for plot in plots:
+                    if not plot.get('id'):
+                        Plot.objects.create(
+                            plot_pay=instance,
+                            **plot
+                        )
+                    else:
+                        edited_plot = Price.objects.get(pk=plot.get('id'))
+                        for attr, value in plot.items():
+                            setattr(edited_plot, attr, value)
+                            edited_plot.save()
 
         instance.save()
 
@@ -158,16 +173,8 @@ class ProductSaleSerializer(serializers.ModelSerializer):
 
 
 class SaleSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(
-        required=True,
-        many=True,
-        queryset=ProductSale.objects.all()
-    )
-    payments = serializers.PrimaryKeyRelatedField(
-        required=True,
-        many=True,
-        queryset=Pay.objects.all()
-    )
+    products = ProductSaleSerializer(many=True)
+    payments = PaySerializer(many=True)
 
     class Meta:
         model = Sale
@@ -195,22 +202,56 @@ class SaleSerializer(serializers.ModelSerializer):
         products = validated_data.pop('products', None)
         payments = validated_data.pop('payments', None)
 
+        pprint(validated_data)
         if not instance:
             instance = super(SaleSerializer, self).create(validated_data)
         else:
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
 
-        if products is not None:
-            if instance.products.count():
-                instance.products.remove(*instance.products.all())
+        if products:
+            with transaction.atomic():
+                ids = []
+                for x in products:
+                    identifier = x.get('id')
+                    if identifier:
+                        ids.append(identifier)
+                instance.products.exclude(pk__in=ids).delete()
 
-            instance.products.add(*products)
+                for product in products:
+                    if not product.get('id'):
+                        ProductSale.objects.create(
+                            product_sale=instance,
+                            **product
+                        )
+                    else:
+                        edited_product = ProductSale.objects.get(pk=product.get('id'))
+                        for attr, value in product.items():
+                            setattr(edited_product, attr, value)
+                            edited_product.save()
 
-        if payments is not None:
-            if instance.payments.count():
-                instance.payments.remove(*instance.payments.all())
-            instance.payments.add(*payments)
+        if payments:
+            with transaction.atomic():
+                ids = []
+                for x in payments:
+                    identifier = x.get('id')
+                    if identifier:
+                        ids.append(identifier)
+                # import ipdb; ipdb.set_trace()
+                instance.payments.exclude(pk__in=ids).delete()
+
+                for pay in payments:
+                    if not pay.get('id'):
+                        pay['pay_sale'] = instance
+                        serialized_pay = PaySerializer(data=pay)
+                        serialized_pay.is_valid()
+                        serialized_pay.create(validated_data=serialized_pay.validate(pay))
+
+                    else:
+                        edited_pay = Pay.objects.get(pk=pay.get('id'))
+                        for attr, value in pay.items():
+                            setattr(edited_pay, attr, value)
+                            edited_pay.save()
 
         instance.save()
 
