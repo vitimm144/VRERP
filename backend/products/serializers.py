@@ -1,10 +1,11 @@
 from django.conf.urls import url, include
 from products.models import Product, ProductSale
-from products.models import Price, Pay, Plot
+from products.models import Price, Pay, Plot, Stock
 from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
 from pprint import pprint
+from django.db.models import Max
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -35,6 +36,41 @@ class PlotSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         )
+
+
+class StockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = (
+            'id',
+            'product',
+            'user',
+            'amount'
+        )
+
+    def create(self, validated_data):
+        return self.create_update(None, validated_data)
+
+    def update(self, instance, validated_data):
+        return self.create_update(instance, validated_data)
+
+    def create_update(self, instance, validated_data):
+        product = validated_data.get('product')
+        max_amount = Stock.objects.filter(product=product).aggregate(Max('amount'))
+        total = max_amount.get('amount__max') + validated_data.get('amount')
+
+        if total > product.amount:
+            raise serializers.ValidationError("Quantidade de produtos excedida.")
+
+        if not instance:
+
+            instance = super(StockSerializer, self).create(validated_data)
+        else:
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+
+        instance.save()
+        return instance
 
 
 class ProductSerializer(serializers.ModelSerializer):
