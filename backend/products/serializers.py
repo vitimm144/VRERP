@@ -222,7 +222,8 @@ class SaleSerializer(serializers.ModelSerializer):
             'status',
             'saleswoman',
             'client',
-            'deduction'
+            'deduction',
+            'user'
         )
         read_only_fields = (
             'created',

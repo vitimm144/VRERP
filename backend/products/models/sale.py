@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.conf import settings
 
 
 class Sale(models.Model):
@@ -33,6 +34,12 @@ class Sale(models.Model):
         null=True,
         blank=True,
         related_name="client",
+        on_delete=models.DO_NOTHING
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        default=1,
+        verbose_name="Loja",
         on_delete=models.DO_NOTHING
     )
 

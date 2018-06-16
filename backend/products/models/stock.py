@@ -11,6 +11,6 @@ class Stock(models.Model):
 
     class Meta:
         unique_together = (("product", "user"),)
-        
+
     def __str__(self):
         return self.product.code
