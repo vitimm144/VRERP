@@ -56,8 +56,11 @@ class StockSerializer(serializers.ModelSerializer):
 
     def create_update(self, instance, validated_data):
         product = validated_data.get('product')
-        max_amount = Stock.objects.filter(product=product).aggregate(Max('amount'))
-        total = max_amount.get('amount__max') + validated_data.get('amount')
+        result = Stock.objects.filter(product=product).aggregate(Max('amount'))
+        max_amount = result.get('amount__max') if result.get('amount__max') else 0
+        pprint("###############max_amount###########")
+        pprint(max_amount)
+        total = max_amount + validated_data.get('amount', 0)
 
         if total > product.amount:
             raise serializers.ValidationError("Quantidade de produtos excedida.")
