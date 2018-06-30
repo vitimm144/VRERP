@@ -26,6 +26,7 @@ from products.views import StockViewSet
 from core.views import ClientViewSet
 from rest_framework.authtoken import views
 from django.conf import settings
+from products.views import AvailabilityView
 
 
 router = routers.DefaultRouter()
@@ -48,6 +49,7 @@ urlpatterns = [
         r'^api/auth/',
         include('rest_framework.urls', namespace='rest_framework')
     ),
+    url(r'^api/availability/$', AvailabilityView.as_view(), name='availability'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
