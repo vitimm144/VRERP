@@ -148,6 +148,38 @@ angular.module('frontendApp', [
           }
         }
       })
+      //CLIENTS
+      .state('clients', {
+        url: '/clients',
+        views:{
+          'content': {
+            templateUrl: '../clients/views/clients.html',
+            controller: 'ClientCtrl',
+            controllerAs: 'client_ctrl',
+            authorize: true
+          }
+        }
+      }).state('clients.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: '../clients/views/client_form.html',
+            controller: 'ClientEditCtrl',
+            controllerAs: 'client_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('clients.edit', {
+        url: '/:clientId',
+        views:{
+          'form':{
+            templateUrl: '../clients/views/client_form.html',
+            controller: 'ClientEditCtrl',
+            controllerAs: 'client_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
       //USERS
       .state('users', {
         url: '/users',

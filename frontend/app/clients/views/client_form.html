@@ -1,0 +1,125 @@
+<div id="wrapper">
+
+  <div id="page-wrapper">
+
+    <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">
+            Cadastro de Cliente
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-ticket"></i>  <a href="/#/clients">Clientes</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> Novo
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-lg-6">
+          <form role="form">
+
+            <div class="form-group">
+              <label>Nome</label>
+              <input
+                ng-model="client_edit_ctrl.client.name"
+                class="form-control"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label>CPF</label>
+              <input
+                ng-model="client_edit_ctrl.client.cpf"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label>RG</label>
+              <input
+                ng-model="client_edit_ctrl.client.rg"
+                class="form-control"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label>Endereço</label>
+              
+              <textarea 
+                ng-model="client_edit_ctrl.client.address"
+                class="form-control"
+              >
+              </textarea>  
+            </div>
+            <div class="form-group">
+              <label>CEP</label>
+              <input
+                ng-model="client_edit_ctrl.client.cep"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input
+                ng-model="client_edit_ctrl.client.cellphone"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label>Telefone</label>
+              <input
+                ng-model="client_edit_ctrl.client.phone"
+                class="form-control"
+              >
+            </div>
+             <div class="form-group">
+              <label>Vendedora</label>
+              
+              <select
+                type="number"
+                ng-model="client_edit_ctrl.client.employee"
+                ng-options="employee.id as employee.name for employee in client_edit_ctrl.employees"
+                class="form-control">
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input
+                ng-model="client_edit_ctrl.client.email"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label>Facebook</label>
+              <input
+                ng-model="client_edit_ctrl.client.facebook"
+                class="form-control"
+              >
+            </div>
+            <button
+              type="button"
+              ng-click="client_edit_ctrl.submit()"
+              class="btn btn-default">Enviar</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+
+          </form>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+

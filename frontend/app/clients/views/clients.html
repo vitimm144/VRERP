@@ -1,0 +1,45 @@
+<div ui-view="form" ng-cloak ng-grid="client_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Clientes
+      <a href="/#/clients/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Celular</th>
+        <th>Email</th>
+        <th>Vendedora</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="client in client_ctrl.clients">
+        <td>{{ client.name}}</td>
+        <td>{{ client.cellphone}}</td>
+        <td>{{ client.email}}</td>
+        <td>{{ client.employee}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/clients/{{client.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="client_ctrl.excluir('/api/clients/' + client.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
