@@ -13,9 +13,12 @@ class Product(models.Model):
     code = models.CharField(unique=True, verbose_name="Código", max_length=255)
     description = models.TextField(null=True, blank=True, verbose_name="Descrição")
     size = models.CharField(choices=SIZE, verbose_name="Tamanho", max_length=3)
-    amount = models.IntegerField(verbose_name="Quantidade")
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
+
+    @property
+    def amount(self):
+        return self.stock_set.count()
 
     class Meta:
         verbose_name = "Produto"

@@ -55,8 +55,6 @@ class Sale(models.Model):
 def save_sale(sender, instance, **kwargs):
     # Decrementando a quantidade de produtos no estoque ao final de cada venda.
     for psale in instance.products.all():
-        psale.product.amount = psale.product.amount - psale.amount
-        psale.product.save()
         try:
             stock = Stock.objects.filter(product=psale.product, user=psale.user)[0]
             if stock:
