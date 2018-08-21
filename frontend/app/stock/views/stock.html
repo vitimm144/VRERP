@@ -1,0 +1,53 @@
+<div ui-view="form" ng-cloak ng-grid="stock_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Estoque
+      <a href="/#/stock/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Código</th>
+        <th>Loja</th>
+        <th>Quantidade</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="stock in stock_ctrl.stocks">
+        <td>{{ stock.product.description }}</td>
+        <td>{{ stock.product.code }}</td>
+        <td>{{ stock.user.username }}</td>
+        <td>{{ stock.amount }}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/stock/{{stock.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="stock_ctrl.excluir('/api/stocks/' + stock.id)"
+            class="btn-danger"
+          > Excluir </button>
+          <button
+            type="button"
+            
+            class="btn-primary"
+          > <a
+            class="btn-primary"
+            ng-href="/#/stock/transfer/{{stock.id}}"
+             > Transferência </a> </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

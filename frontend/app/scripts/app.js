@@ -180,6 +180,48 @@ angular.module('frontendApp', [
           }
         }
       })
+      //CLIENTS
+      .state('stock', {
+        url: '/stock',
+        views:{
+          'content': {
+            templateUrl: '../stock/views/stock.html',
+            controller: 'StockCtrl',
+            controllerAs: 'stock_ctrl',
+            authorize: true
+          }
+        }
+      }).state('stock.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: '../stock/views/stock_form.html',
+            controller: 'StockEditCtrl',
+            controllerAs: 'stock_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('stock.edit', {
+        url: '/:stocktId',
+        views:{
+          'form':{
+            templateUrl: '../stock/views/stock_form.html',
+            controller: 'StockEditCtrl',
+            controllerAs: 'stock_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('stock.transfer', {
+        url: '/transfer/:stockId',
+        views:{
+          'form':{
+            templateUrl: '../stock/views/stock_transfer.html',
+            controller: 'StockTransferCtrl',
+            controllerAs: 'stock_transfer_ctrl',
+            authorize: true
+          }
+        }
+      })
       //USERS
       .state('users', {
         url: '/users',

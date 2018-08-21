@@ -47,6 +47,7 @@ class StockSerializer(serializers.ModelSerializer):
             'user',
             'amount'
         )
+        depth = 1
 
     def create(self, validated_data):
         return self.create_update(None, validated_data)

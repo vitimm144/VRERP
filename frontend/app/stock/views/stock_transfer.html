@@ -1,0 +1,96 @@
+<div id="wrapper">
+
+  <div id="page-wrapper">
+
+    <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">
+            Transferência de Produto
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-ticket"></i>  <a href="/#/stock">Estoque</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> Novo
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <div class="container list-inline table-hover">
+        <h3>Informações do Produto à ser transferido:</h3>
+        <div class="row">
+          
+          <div class="col-lg-10 table-responsive">
+            <div class="col-md-2 bg-primary">Codigo</div>
+            <div class="col-md-4 bg-primary">Produto</div>
+            <div class="col-md-2 bg-primary">Quantidade</div>
+            <div class="col-md-4 bg-primary">Loja</div>
+            
+          </div>
+        </div>
+        <div class="row">
+          
+          <div class="col-lg-10 table-responsive">
+            <div class="col-md-2 bg-info">{{stock_transfer_ctrl.stock.product.code}}</div>
+            <div class="col-md-4 bg-info">{{stock_transfer_ctrl.stock.product.description}}</div>
+            <div class="col-md-2 bg-info">{{stock_transfer_ctrl.stock.amount}}</div>
+            <div class="col-md-4 bg-info">{{stock_transfer_ctrl.stock.user.username}}</div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="row-border">
+        <div class="col-lg-6">
+          <h3>Transferência:</h3>
+          
+          <form role="form" name="stock_form">
+            
+            <div class="form-group">
+              
+              <label>Loja</label>
+              
+              <select
+                type="number"
+                ng-model="stock_transfer_ctrl.post_data.user"
+                ng-options="user.id as user.username for user in stock_transfer_ctrl.users"
+                class="form-control">
+                  
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Quantidade</label>
+              
+              <input
+                type="number"
+                ng-model="stock_transfer_ctrl.post_data.amount"
+                class="form-control">
+            </div>
+            
+            
+            <button
+              type="button"
+              ng-click="stock_transfer_ctrl.submit(stock_transfer_ctrl.file)"
+              class="btn btn-default">Enviar</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+
+          </form>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
