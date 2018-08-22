@@ -18,7 +18,8 @@ class Product(models.Model):
 
     @property
     def amount(self):
-        return self.stock_set.count()
+        amount = self.stock_set.all().aggregate(models.Sum('amount'))
+        return amount.get("amount__sum") or 0
 
     class Meta:
         verbose_name = "Produto"

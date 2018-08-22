@@ -202,7 +202,7 @@ angular.module('frontendApp', [
           }
         }
       }).state('stock.edit', {
-        url: '/:stocktId',
+        url: '/:stockId',
         views:{
           'form':{
             templateUrl: '../stock/views/stock_form.html',

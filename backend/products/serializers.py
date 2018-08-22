@@ -7,6 +7,8 @@ from rest_framework import routers, serializers, viewsets
 from pprint import pprint
 from django.db.models import Max
 
+from users.serializers import UserSerializer
+
 
 class PriceSerializer(serializers.ModelSerializer):
 
@@ -36,45 +38,6 @@ class PlotSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         )
-
-
-class StockSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Stock
-        fields = (
-            'id',
-            'product',
-            'user',
-            'amount'
-        )
-        depth = 1
-
-    def create(self, validated_data):
-        return self.create_update(None, validated_data)
-
-    def update(self, instance, validated_data):
-        return self.create_update(instance, validated_data)
-
-    def create_update(self, instance, validated_data):
-        product = validated_data.get('product')
-        result = Stock.objects.filter(product=product).aggregate(Max('amount'))
-        max_amount = result.get('amount__max') if result.get('amount__max') else 0
-        pprint("###############max_amount###########")
-        pprint(max_amount)
-        total = max_amount + validated_data.get('amount', 0)
-
-        if total > product.amount:
-            raise serializers.ValidationError("Quantidade de produtos excedida.")
-
-        if not instance:
-
-            instance = super(StockSerializer, self).create(validated_data)
-        else:
-            for attr, value in validated_data.items():
-                setattr(instance, attr, value)
-
-        instance.save()
-        return instance
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -141,6 +104,51 @@ class ProductSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        return instance
+
+
+class StockSerializer(serializers.ModelSerializer):
+    # product = ProductSerializer()
+    # user = UserSerializer()
+
+    class Meta:
+        model = Stock
+        fields = (
+            'id',
+            'product',
+            'user',
+            'amount'
+        )
+        depth = 1
+
+    def to_internal_value(self, data):
+        # Salvando objetos em atributos da classe para poder resgata-los
+        # no metodo para salvar. Esse rack é necessário pois a validação do
+        # serializar tira os objetos.
+        self._produto = data.get('product')
+        self._user = data.get('user')
+        return super(StockSerializer, self).to_internal_value(data)
+
+    def create(self, validated_data):
+        return self.create_update(None, validated_data)
+
+    def update(self, instance, validated_data):
+        return self.create_update(instance, validated_data)
+
+    def create_update(self, instance, validated_data):
+        # Rack para utilizar depth no serializer
+        import ipdb; ipdb.set_trace()
+        validated_data['product_id'] = self._produto.get('id')
+        validated_data['user_id'] = self._user.get('id')
+
+        if not instance:
+
+            instance = super(StockSerializer, self).create(validated_data)
+        else:
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+
+        instance.save()
         return instance
 
 

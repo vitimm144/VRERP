@@ -4,7 +4,6 @@ angular.module('frontendApp')
   $scope,
   $stateParams,
   $state,
-  Upload,
   $http,
   AuthService,
   formService,
@@ -31,21 +30,24 @@ angular.module('frontendApp')
   
   if ($stateParams.stockId){
     stock_edit_ctrl.url += $stateParams.stockId + '/';
-    console.log('stock id ', $stateParams.stockId);
     stock_edit_ctrl.method = 'PUT';
+    console.log(stock_edit_ctrl.url);
     $http.get(stock_edit_ctrl.url).then(function(data){
       
       stock_edit_ctrl.stock = data.data;
-              console.log('edição');
-              console.log(stock_edit_ctrl.stock);
+      console.log('edição');
+      console.log(stock_edit_ctrl.stock);
     });
   }else{
     stock_edit_ctrl.method = 'POST';
-    stock_edit_ctrl.stock = {};
+    stock_edit_ctrl.stock = {
+      "user":{},
+      "product":{}
+    };
   }
   
   stock_edit_ctrl.submit = function(){
-    result = formService.saveFormData(stock_edit_ctrl.stock, stock_edit_ctrl.url);
+    result = formService.saveFormData(stock_edit_ctrl.stock, stock_edit_ctrl.base_url);
     result.then(
     function (response) {
 //      window.alert('ok');
