@@ -4,7 +4,6 @@ angular.module('frontendApp')
   $scope,
   $stateParams,
   $state,
-  Upload,
   $http,
   AuthService,
   formService,
@@ -39,12 +38,7 @@ angular.module('frontendApp')
   });
   
   stock_transfer_ctrl.submit = function(){
-            console.log("submit");
-            console.log(stock_transfer_ctrl.post_data);
     $http.post(stock_transfer_ctrl.post_url, stock_transfer_ctrl.post_data).then(function(data){
-      
-      
-      console.log('edição');
       console.log(stock_transfer_ctrl.stock);
     });
 //    result = formService.saveFormData(stock_transfer_ctrl.stock, stock_transfer_ctrl.url);
