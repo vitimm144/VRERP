@@ -12,7 +12,7 @@ angular.module('frontendApp')
   AUTH_LOGOUT_PATH
 ){
   var stock_transfer_ctrl = this;
-  stock_transfer_ctrl.post_url = 'api/stocks/transfer/';
+  stock_transfer_ctrl.post_url = 'api/stock/transfer/';
   stock_transfer_ctrl.url = 'api/stocks/';
   stock_transfer_ctrl.post_data = {};
   
@@ -38,20 +38,17 @@ angular.module('frontendApp')
   });
   
   stock_transfer_ctrl.submit = function(){
-    $http.post(stock_transfer_ctrl.post_url, stock_transfer_ctrl.post_data).then(function(data){
-      console.log(stock_transfer_ctrl.stock);
-    });
-//    result = formService.saveFormData(stock_transfer_ctrl.stock, stock_transfer_ctrl.url);
-//    result.then(
-//    function (response) {
-//      window.alert('ok');
-//      var message = 'Operação realizada com sucesso';
-//      alertService.message(message, 'success');
-//      $state.go( '^' );
-//    }, function (response) {
-//      var message = 'Erro na operação'
-//      alertService.message(message, 'danger');
-//    });
+    stock_transfer_ctrl.post_data['from_transfer'] = stock_transfer_ctrl.stock
+    $http.post(stock_transfer_ctrl.post_url, stock_transfer_ctrl.post_data).then(
+      function (response) {
+        var message = 'Operação realizada com sucesso';
+        alertService.message(message, 'success');
+        $state.go( '^' );
+      }, function (response) {
+        var message = 'Erro na operação'
+        alertService.message(message, 'danger');
+      }
+    );
   } 
   
 });
