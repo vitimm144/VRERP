@@ -39,13 +39,17 @@ angular.module('frontendApp', [
 
 })
 .config(function ($stateProvider, $urlRouterProvider  ) {
+//    var url_prefix = 'app/'
+//    var url_prefix_2 = 'app/'
+    var url_prefix = '../';
+    var url_prefix_2 = '';
     $urlRouterProvider.otherwise( '/main' );
     $stateProvider
       .state('main', {
         url: '/main',
         views:{
           'content': {
-            templateUrl: 'views/main.html',
+            templateUrl: url_prefix_2 + 'views/main.html',
             controller: 'MainCtrl',
             controllerAs: 'main',
             authorize: true
@@ -57,7 +61,7 @@ angular.module('frontendApp', [
         url: '/products',
         views:{
           'content': {
-            templateUrl: '../products/views/products.html',
+            templateUrl: url_prefix +  'products/views/products.html',
             controller: 'ProductCtrl',
             controllerAs: 'product_ctrl',
             authorize: true
@@ -67,7 +71,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: '../products/views/product_form.html',
+            templateUrl: url_prefix + 'products/views/product_form.html',
             controller: 'ProductEditCtrl',
             controllerAs: 'product_edit_ctrl',
             authorize: true
@@ -77,7 +81,7 @@ angular.module('frontendApp', [
         url: '/:productId',
         views:{
           'form':{
-            templateUrl: '../products/views/product_form.html',
+            templateUrl: url_prefix +  'products/views/product_form.html',
             controller: 'ProductEditCtrl',
             controllerAs: 'product_edit_ctrl',
             authorize: true
@@ -89,7 +93,7 @@ angular.module('frontendApp', [
         url: '/employees',
         views:{
           'content': {
-            templateUrl: '../employees/views/employees.html',
+            templateUrl: url_prefix +  'employees/views/employees.html',
             controller: 'EmployeeCtrl',
             controllerAs: 'employee_ctrl',
             authorize: true
@@ -99,7 +103,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: '../employees/views/employee_form.html',
+            templateUrl: url_prefix +  'employees/views/employee_form.html',
             controller: 'EmployeeEditCtrl',
             controllerAs: 'employee_edit_ctrl',
             authorize: true
@@ -109,7 +113,7 @@ angular.module('frontendApp', [
         url: '/:employeeId',
         views:{
           'form':{
-            templateUrl: '../employees/views/employee_form.html',
+            templateUrl: url_prefix +  'employees/views/employee_form.html',
             controller: 'EmployeeEditCtrl',
             controllerAs: 'employee_edit_ctrl',
             authorize: true
@@ -121,7 +125,7 @@ angular.module('frontendApp', [
         url: '/careers',
         views:{
           'content': {
-            templateUrl: '../careers/views/careers.html',
+            templateUrl: url_prefix +  'careers/views/careers.html',
             controller: 'CareerCtrl',
             controllerAs: 'career_ctrl',
             authorize: true
@@ -131,7 +135,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: '../careers/views/career_form.html',
+            templateUrl: url_prefix +  'careers/views/career_form.html',
             controller: 'CareerEditCtrl',
             controllerAs: 'career_edit_ctrl',
             authorize: true
@@ -141,7 +145,7 @@ angular.module('frontendApp', [
         url: '/:careerId',
         views:{
           'form':{
-            templateUrl: '../careers/views/career_form.html',
+            templateUrl: url_prefix +  'careers/views/career_form.html',
             controller: 'CareerEditCtrl',
             controllerAs: 'career_edit_ctrl',
             authorize: true
@@ -153,7 +157,7 @@ angular.module('frontendApp', [
         url: '/clients',
         views:{
           'content': {
-            templateUrl: '../clients/views/clients.html',
+            templateUrl: url_prefix +  'clients/views/clients.html',
             controller: 'ClientCtrl',
             controllerAs: 'client_ctrl',
             authorize: true
@@ -163,7 +167,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: '../clients/views/client_form.html',
+            templateUrl: url_prefix +  'clients/views/client_form.html',
             controller: 'ClientEditCtrl',
             controllerAs: 'client_edit_ctrl',
             authorize: true
@@ -173,7 +177,7 @@ angular.module('frontendApp', [
         url: '/:clientId',
         views:{
           'form':{
-            templateUrl: '../clients/views/client_form.html',
+            templateUrl: url_prefix +  'clients/views/client_form.html',
             controller: 'ClientEditCtrl',
             controllerAs: 'client_edit_ctrl',
             authorize: true
@@ -185,7 +189,7 @@ angular.module('frontendApp', [
         url: '/stock',
         views:{
           'content': {
-            templateUrl: '../stock/views/stock.html',
+            templateUrl: url_prefix +  'stock/views/stock.html',
             controller: 'StockCtrl',
             controllerAs: 'stock_ctrl',
             authorize: true
@@ -195,7 +199,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: '../stock/views/stock_form.html',
+            templateUrl: url_prefix +  'stock/views/stock_form.html',
             controller: 'StockEditCtrl',
             controllerAs: 'stock_edit_ctrl',
             authorize: true
@@ -205,7 +209,7 @@ angular.module('frontendApp', [
         url: '/:stockId',
         views:{
           'form':{
-            templateUrl: '../stock/views/stock_form.html',
+            templateUrl: url_prefix + 'stock/views/stock_form.html',
             controller: 'StockEditCtrl',
             controllerAs: 'stock_edit_ctrl',
             authorize: true
@@ -215,7 +219,7 @@ angular.module('frontendApp', [
         url: '/transfer/:stockId',
         views:{
           'form':{
-            templateUrl: '../stock/views/stock_transfer.html',
+            templateUrl: url_prefix + 'stock/views/stock_transfer.html',
             controller: 'StockTransferCtrl',
             controllerAs: 'stock_transfer_ctrl',
             authorize: true
@@ -227,7 +231,7 @@ angular.module('frontendApp', [
         url: '/users',
         views:{
           'content': {
-            templateUrl: 'views/users.html',
+            templateUrl: url_prefix_2 + 'views/users.html',
             controller: 'UserCtrl',
             controllerAs: 'user_ctrl',
             authorize: true
@@ -237,7 +241,7 @@ angular.module('frontendApp', [
         url: '/new',
         views:{
           'form':{
-            templateUrl: 'views/form.html',
+            templateUrl: url_prefix_2 + 'views/form.html',
             controller: 'UserEditCtrl',
             controllerAs: 'user_edit_ctrl',
             authorize: true
@@ -247,7 +251,7 @@ angular.module('frontendApp', [
         url: '/:userId',
         views:{
           'form':{
-            templateUrl: 'views/form.html',
+            templateUrl: url_prefix_2 + 'views/form.html',
             controller: 'UserEditCtrl',
             controllerAs: 'user_edit_ctrl',
             authorize: true
@@ -258,7 +262,7 @@ angular.module('frontendApp', [
         url: '/about',
         views:{
           'content': {
-            templateUrl: 'views/about.html',
+            templateUrl: url_prefix_2 + 'views/about.html',
             controller: 'AboutCtrl',
             authorize: true
           }

@@ -1,0 +1,334 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/datatables.net-dt/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css" />
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <!--<link rel="stylesheet" href="styles/main.css">-->
+    <title>VR ERP</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="app/styles/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS RTL-->
+    <!--<link href="styles/bootstrap-rtl.css" rel="stylesheet">-->
+    <!-- Custom CSS -->
+    <link href="app/styles/sb-admin.css" rel="stylesheet">
+    <!--<link href="styles/sb-admin-rtl.css" rel="stylesheet">-->
+    <!-- Morris Charts CSS -->
+    <link href="app/styles/plugins/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="app/images/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- endbuild -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="frontendApp" ng-cloak ng-controller="LoginCtrl as login_ctrl" >
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+      <div class="jumbotron" ng-show="!loggedIn">
+        <div class="container">
+          <div class="col-md-6 col-md-offset-3 ">
+            {{ 'You are logged: ' + loggedIn }}
+            <h2>login</h3>
+
+            <form class="form-horizontal" ng-submit="login_ctrl.login()">
+              <div class="form-group">
+              <label>Login</label>
+              <i class="icon-user"></i>
+              <input type="text"
+                     class="form-control"
+                     autofocus
+                     placeholder=""
+                     ng-model="login_ctrl.user.username"
+              />
+              </div>
+              <div class="form-group">
+              <label>Senha</label>
+              <i class="icon-lock"></i>
+              <input type="password"
+                     class="form-control"
+                     placeholder=""
+                     ng-model="login_ctrl.user.password" ng-disabled="!login_ctrl.user.username"
+                     
+              />
+              </div>
+              <!-- /.options-login -->
+              <div class="form-actions">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  ng-disabled="!login_ctrl.user.password">
+                  <span>Enter</span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+          
+        </div>
+        
+
+    </div>
+    <div id="wrapper" ng-controller="MainCtrl as main">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+<!--                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>-->
+                <a class="navbar-brand" href="index.html">VR ERP</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>{{login_ctrl.user.username}} </strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a >
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>{{login_ctrl.user.username}}</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a >
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>{{login_ctrl.user.username}} </strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-footer">
+                            <a >Read All New Messages</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown" ng-if="loggedIn">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a >Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a >View All</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ login_ctrl.user.username }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a ><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                        </li>
+                        <li>
+                            <a ><i class="fa fa-fw fa-gear"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a ng-click="login_ctrl.logout()"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!--###################### MENU ########################################-->
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" ng-show="loggedIn">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/#/users"><i class="fa fa-fw fa-user"></i> Usuários</a>
+                    </li>
+                    <li>
+                        <a href="/#/products"><i class="fa fa-fw fa-ticket"></i> Produtos</a>
+                    </li>
+                    <li>
+                        <a href="/#/careers"><i class="fa fa-fw fa-magnet"></i> Cargos</a>
+                        
+                    </li>
+                    <li>
+                        <a href="/#/employees"><i class="fa fa-fw fa-users"></i> Funcionários</a>
+                        
+                    </li>
+                    <li>
+                        <a href="/#/clients"><i class="fa fa-fw fa-book "></i> Clientes</a>
+                        
+                    </li>
+                    <li>
+                        <a href="/#/stock"><i class="fa fa-fw fa-save "></i> Estoque</a>
+                        
+                    </li>
+                    <li>
+                        <a href="" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="#">Dropdown Item</a>
+                            </li>
+                            <li>
+                                <a href="#">Dropdown Item</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <!--###################-->
+        <!--aplication content-->
+        <!--###################-->
+        <div class="row" ng-show="alertMessage">
+          <div class="col-lg-12">
+            <div class="{{type}}">
+              <button type="button" class="close" ng-click="alertMessage=false">&times;</button>
+              <i class="fa fa-info-circle"></i> <span> {{ message }} </span> 
+            </div>
+          </div>
+        </div>
+        <div 
+          ng-show="loggedIn"
+          id="page-wrapper"
+          class="container-fluid"
+          ui-view="content"
+        >
+        </div>
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-data-grid/dist/dataGrid.js"></script>
+    <script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+    <script src="bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="app/scripts/app.js"></script>
+        <script src="app/scripts/auth.js"></script>
+        <script src="app/scripts/services/alert_service.js"></script>
+        <script src="app/scripts/services/form_service.js"></script>
+        <script src="app/scripts/services/grid_service.js"></script>
+        <script src="app/scripts/controllers/login.js"></script>
+        <script src="app/scripts/controllers/main.js"></script>
+        <script src="app/scripts/controllers/about.js"></script>
+        <script src="app/scripts/controllers/user.js"></script>
+        <script src="app/scripts/controllers/user_edit.js"></script>
+        <script src="app/products/controllers/product.js"></script>
+        <script src="app/products/controllers/product_edit.js"></script>
+        <script src="app/careers/controllers/career.js"></script>
+        <script src="app/careers/controllers/career_edit.js"></script>
+        <script src="app/employees/controllers/employee.js"></script>
+        <script src="app/employees/controllers/employee_edit.js"></script>
+        <script src="app/clients/controllers/client.js"></script>
+        <script src="app/clients/controllers/client_edit.js"></script>
+        <script src="app/stock/controllers/stock.js"></script>
+        <script src="app/stock/controllers/stock_edit.js"></script>
+        <script src="app/stock/controllers/stock_transfer.js"></script>
+        <!--<script src="scripts/controllers/about.js"></script>-->
+        <!-- endbuild -->
+    <!-- Morris Charts JavaScript -->
+    <!--<script src="scripts/bootstrap.min.js"></script>-->
+    <script src="app/scripts/plugins/morris/raphael.min.js"></script>
+    <script src="app/scripts/plugins/morris/morris.js"></script>
+    <!--<script src="scripts/plugins/morris/morris-data.js"></script>-->
+</body>
+</html>

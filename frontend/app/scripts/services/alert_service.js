@@ -3,7 +3,7 @@ angular.module('frontendApp').service(
 
   // expose a saveRecipe function from your service
   // that takes a recipe object
-            console.log('chamou alertservice');
+//            console.log('chamou alertservice');
   var type_dict = {
     
     danger:'alert alert-danger alert-dismissable',
@@ -13,7 +13,7 @@ angular.module('frontendApp').service(
     
   };
   this.message = function(message, type){
-            console.log('chamou alertservice message');
+//            console.log('chamou alertservice message');
     $rootScope.message = message;
     $rootScope.type = type_dict[type];
     $rootScope.alertMessage = true;
