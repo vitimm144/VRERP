@@ -225,3 +225,9 @@ ul.alert-dropdown {
 .panel-yellow > a:hover {
     color: #df8a13;
 }
+
+.main-container{
+  min-height: 60em;
+  height:auto;
+  width: 120em !important;
+}

@@ -25,11 +25,6 @@ angular.module('frontendApp')
     stock_transfer_ctrl.users = data.data.results;
   });
   
-  $http.get('/api/products').then(function(data){
-    console.log(data);
-    stock_transfer_ctrl.products = data.data.results;
-  });
-  
   stock_transfer_ctrl.url += stock_transfer_ctrl.stockId + '/';
   $http.get(stock_transfer_ctrl.url).then(function(data){
     stock_transfer_ctrl.post_data.stock = data.data;   
