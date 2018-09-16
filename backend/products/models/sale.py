@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.conf import settings
 from products.models import Stock
+import locale
 
 
 class Sale(models.Model):
@@ -44,11 +45,28 @@ class Sale(models.Model):
         on_delete=models.DO_NOTHING
     )
 
+    @property
+    def total(self):
+        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+        result = self.payments.all().aggregate(models.Sum('value'))
+        valor = locale.currency(result.get('value__sum', '0'))
+        return valor
+
+    @property
+    def saleswoman_str(self):
+        return self.saleswoman.name
+
+    @property
+    def user_str(self):
+        return self.user.username
+
     def __str__(self):
         return self.status
 
     class Meta:
         ordering = ['created', 'status']
+        verbose_name = "Venda"
+        verbose_name_plural = "Vendas"
 
 
 @receiver(post_save, sender=Sale)

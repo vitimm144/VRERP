@@ -228,6 +228,13 @@ class SaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sale
+        read_only_fields = (
+            'created',
+            'modified',
+            'total',
+            'saleswoman_str',
+            'user_str',
+        )
         fields = (
             'id',
             'products',
@@ -236,12 +243,12 @@ class SaleSerializer(serializers.ModelSerializer):
             'saleswoman',
             'client',
             'deduction',
-            'user'
+            'user',
+            'total',
+            'saleswoman_str',
+            'user_str',
         )
-        read_only_fields = (
-            'created',
-            'modified',
-        )
+
 
     def create(self, validated_data):
         return self.create_update(None, validated_data)
