@@ -17,6 +17,7 @@ angular.module('frontendApp', [
     'frontendAuthApp',
     'ngTouch',
     'ui.router',
+    'ui.select',
     'ngFileUpload',
     'datatables'
   ])
@@ -84,6 +85,38 @@ angular.module('frontendApp', [
             templateUrl: url_prefix +  'products/views/product_form.html',
             controller: 'ProductEditCtrl',
             controllerAs: 'product_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
+      //SALES
+      .state('sales', {
+        url: '/sales',
+        views:{
+          'content': {
+            templateUrl: url_prefix +  'sales/views/sales.html',
+            controller: 'SaleCtrl',
+            controllerAs: 'sale_ctrl',
+            authorize: true
+          }
+        }
+      }).state('sales.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: url_prefix + 'sales/views/sale_form.html',
+            controller: 'SaleEditCtrl',
+            controllerAs: 'sale_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('sales.edit', {
+        url: '/:saleId',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'sales/views/sale_form.html',
+            controller: 'SaleEditCtrl',
+            controllerAs: 'sale_edit_ctrl',
             authorize: true
           }
         }

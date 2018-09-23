@@ -1,0 +1,45 @@
+<div ui-view="form" ng-cloak ng-grid="sale_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Vendas
+      <a href="/#/sales/new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Loja</th>
+        <th>vendedora</th>
+        <th>Total</th>
+        <th>status</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="sale in sale_ctrl.sales">
+        <td>{{ sale.user_str}}</td>
+        <td>{{ sale.saleswoman_str}}</td>
+        <td>{{ sale.total}}</td>
+        <td>{{ sale_ctrl.status[sale.status]}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button">
+            
+          <a
+            class="btn-primary"
+            ng-href="/#/sales/{{sale.id}}"
+             > Editar </a>
+          </button>
+          <button
+            type="button"
+            ng-click="sale_ctrl.excluir('/api/sales/' + sale.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
