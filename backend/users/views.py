@@ -8,7 +8,7 @@ from users.serializers import EmployeeSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all().exclude(username='admin')
     serializer_class = UserSerializer
 
 

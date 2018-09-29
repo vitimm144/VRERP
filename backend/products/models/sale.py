@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from products.models import Stock
 import locale
-
+from pprint import pprint
 
 class Sale(models.Model):
 
@@ -72,13 +72,13 @@ class Sale(models.Model):
 @receiver(post_save, sender=Sale)
 def save_sale(sender, instance, **kwargs):
     # Decrementando a quantidade de produtos no estoque ao final de cada venda.
-    for psale in instance.products.all():
-        try:
-            stock = Stock.objects.filter(product=psale.product, user=psale.user)[0]
-            if stock:
-                stock.amount -= psale.amount
-                stock.save()
-        except Exception as e:
-            print(e.message)
-            pass
-
+    created = kwargs.get('created')
+    if created:
+        for psale in instance.products.all():
+            try:
+                stock = Stock.objects.filter(product=psale.product, user=psale.user)[0]
+                if stock:
+                    stock.amount -= psale.amount
+                    stock.save()
+            except Exception as e:
+                print(e)

@@ -137,7 +137,6 @@ class StockSerializer(serializers.ModelSerializer):
 
     def create_update(self, instance, validated_data):
         # Rack para utilizar depth no serializer
-        import ipdb; ipdb.set_trace()
         validated_data['product_id'] = self._produto.get('id')
         validated_data['user_id'] = self._user.get('id')
 
@@ -248,7 +247,6 @@ class SaleSerializer(serializers.ModelSerializer):
             'saleswoman_str',
             'user_str',
         )
-
 
     def create(self, validated_data):
         return self.create_update(None, validated_data)
