@@ -100,10 +100,12 @@ angular.module('frontendApp')
     };
   }
   sale_edit_ctrl.addProduct = function(){
+            console.log(sale_edit_ctrl.newProduct);
     sale_edit_ctrl.sale.products.push({
       'id': sale_edit_ctrl.sale.products.length+1,
-      'product': sale_edit_ctrl.newProduct.product,
-      'amount': sale_edit_ctrl.newProduct.amount
+      'product': sale_edit_ctrl.newProduct.product.id,
+      'amount': sale_edit_ctrl.newProduct.amount,
+      'price': sale_edit_ctrl.newProduct.product.products[0].id
     });
     sale_edit_ctrl.newProduct = null;
   }
@@ -118,6 +120,19 @@ angular.module('frontendApp')
   }
 
   sale_edit_ctrl.submit = function(){
+    //Tratamento para salvar o produto na forma de product sale.
+//    sale_edit_ctrl.sale.products.forEach(function(product){
+//      
+//      if (product.products){
+//        product['price'] = product.products[0].id;
+//      }
+//              
+//    });
+            console.log('SALE');
+    console.log(sale_edit_ctrl.sale);
+       
+    
+    
     console.log('submit');
     console.log(sale_edit_ctrl.url);
     result = formService.saveFormData(

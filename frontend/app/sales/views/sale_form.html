@@ -47,7 +47,7 @@
                     <ui-select-match>
                       <span>{{ $select.selected.code}} - {{ $select.selected.description}}</span>
                     </ui-select-match>
-                    <ui-select-choices repeat="product.id as product in (sale_edit_ctrl.products | filter: $select.search) track by product.code">
+                    <ui-select-choices repeat="product in (sale_edit_ctrl.products | filter: $select.search) track by product.code">
                       <span>{{ product.code }} - {{ product.description }}</span>
                     </ui-select-choices>
                   </ui-select>
@@ -68,6 +68,7 @@
                     <td>Produto</td>
                     <td>Valor Unitário</td>
                     <td>Valor Total</td>
+                    <td>Excluir</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -82,6 +83,13 @@
                     <td ng-repeat="product in sale_edit_ctrl.products" ng-if="item.product == product.id">
                       {{ product.products[0].value * item.amount | currency:"R$" }}
                     </td>
+                    <td>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      ng-click="sale_edit_ctrl.sale.products.splice($index, 1)"
+                    >Excluir</button>
+                  </td>
                   </tr>
                 </tbody>
               </table>
@@ -174,6 +182,7 @@
                   <td>Forma</td>
                   <td>Parcelas</td>
                   <td>Valor</td>
+                  <td>Excluir</td>
                 </tr>
               </thead>
               <tbody>
@@ -183,6 +192,13 @@
                   </td>
                   <td>{{ item.plots_amount }}</td>
                   <td>{{ item.value | currency:"R$" }}</td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      ng-click="sale_edit_ctrl.sale.payments.splice($index, 1)"
+                    >Excluir</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
