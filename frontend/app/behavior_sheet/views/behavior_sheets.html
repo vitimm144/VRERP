@@ -1,0 +1,43 @@
+<div ui-view="form" ng-cloak ng-grid="behavior_sheet_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Comportamento
+      <a ui-sref="behavior_sheets.new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Motivo</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="behavior_sheet in behavior_sheet_ctrl.behavior_sheets">
+        <td>{{ behavior_sheet.behavior_type}}</td>
+        <td>{{ behavior_sheet.date}}</td>
+        <td>{{ behavior_sheet.reason}}</td>
+        <td>
+            
+          <button
+            class="btn-primary"
+            type="button"
+            ng-click="behavior_sheet_ctrl.edit(behavior_sheet.id)"
+            >
+           Editar
+          </button>
+          <button
+            type="button"
+            ng-click="behavior_sheet_ctrl.excluir('/api/behavior_sheets/' + behavior_sheet.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

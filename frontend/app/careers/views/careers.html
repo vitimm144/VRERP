@@ -2,7 +2,7 @@
   <div  class="container-fluid">
     <h1> 
       Cargos
-      <a href="/#/careers/new"> 
+      <a ui-sref="careers.new"> 
         <i class="fa fa-plus-circle"></i> 
       </a>
     </h1>
@@ -21,12 +21,8 @@
         <td>{{ career.description}}</td>
         <td>
             
-          <button class="btn-primary" type="button">
-            
-          <a
-            class="btn-primary"
-            ng-href="/#/careers/{{career.id}}"
-             > Editar </a>
+          <button class="btn-primary" type="button" ng-click="career_ctrl.edit(career.id)">
+          Editar          
           </button>
           <button
             type="button"

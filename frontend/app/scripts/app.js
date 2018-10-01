@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular.module('frontendApp', [
-//    'ngAnimate',
+    'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
@@ -19,7 +19,8 @@ angular.module('frontendApp', [
     'ui.router',
     'ui.select',
     'ngFileUpload',
-    'datatables'
+    'datatables',
+    'ui.bootstrap'
   ])
 .run(function ($rootScope,AuthService) {
   console.log('run');
@@ -185,6 +186,38 @@ angular.module('frontendApp', [
           }
         }
       })
+      //BEHAVIOR_SHEET
+      .state('behavior_sheets', {
+        url: '/behavior_sheets',
+        views:{
+          'content': {
+            templateUrl: url_prefix +  'behavior_sheet/views/behavior_sheets.html',
+            controller: 'BehaviorSheetCtrl',
+            controllerAs: 'behavior_sheet_ctrl',
+            authorize: true
+          }
+        }
+      }).state('behavior_sheets.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'behavior_sheet/views/behavior_sheet_form.html',
+            controller: 'BehaviorSheetEditCtrl',
+            controllerAs: 'behavior_sheet_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('behavior_sheets.edit', {
+        url: '/{behaviorSheetId}',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'behavior_sheet/views/behavior_sheet_form.html',
+            controller: 'BehaviorSheetEditCtrl',
+            controllerAs: 'behavior_sheet_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
       //CLIENTS
       .state('clients', {
         url: '/clients',
@@ -217,7 +250,7 @@ angular.module('frontendApp', [
           }
         }
       })
-      //CLIENTS
+      //STOCK
       .state('stock', {
         url: '/stock',
         views:{

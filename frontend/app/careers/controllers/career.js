@@ -2,6 +2,7 @@ angular.module('frontendApp')
   .controller('CareerCtrl', function (
   $rootScope,
   $scope,
+  $state,
   $http,
   AuthService,
   gridService,
@@ -25,6 +26,10 @@ angular.module('frontendApp')
   } 
     
   update_grid();
+  career_ctrl.edit = function(id){
+    $state.go('careers.edit', {"careerId":id});
+  }
+  
   career_ctrl.excluir = function(url){
    gridService.delete_data().then(
     function(){

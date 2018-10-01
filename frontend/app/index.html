@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <!-- endbower -->
     <!-- endbuild -->
+    
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="bower_components/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" />-->
+    <!--<link href="images/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/css/bootstrap.css" />-->
+    
     <!-- build:css(.tmp) styles/main.css -->
     <!--<link rel="stylesheet" href="styles/main.css">-->
     <!-- endbuild -->
@@ -91,7 +97,7 @@
         
 
     </div>
-    <div id="wrapper" ng-controller="MainCtrl as main">
+    <div id="wrapper" ng-cloak ng-controller="MainCtrl as main">
 
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -200,39 +206,51 @@
                         <a href="/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="/#/users"><i class="fa fa-fw fa-user"></i> Usuários</a>
+                        <a ui-sref="users"><i class="fa fa-fw fa-user"></i> Usuários</a>
                     </li>
                     <li>
-                        <a href="/#/products"><i class="fa fa-fw fa-ticket"></i> Produtos</a>
+                        <a ui-sref="products"><i class="fa fa-fw fa-ticket"></i> Produtos</a>
+                    </li>
+                    
+                    <li>
+                        <a href="" data-toggle="collapse" data-target="#employee">
+                          <i class="fa fa-fw fa-users"></i> Funcionários 
+                          <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
+                        <ul id="employee" class="collapse">
+                            <li>
+                                <a ui-sref="employees"><i class="fa fa-fw fa-users"></i> Funcionários</a>
+
+                            </li>
+                            <li>
+                              <a ui-sref="careers"><i class="fa fa-fw fa-magnet"></i> Cargos</a>
+                            </li>
+                            <li>
+                                <a ui-sref="behavior_sheets"><i class="fa fa-fw fa-adjust"></i> Comportamento</a>
+                            </li>
+                            
+                        </ul>
                     </li>
                     <li>
-                        <a href="/#/careers"><i class="fa fa-fw fa-magnet"></i> Cargos</a>
+                        <a ui-sref="clients"><i class="fa fa-fw fa-book "></i> Clientes</a>
                         
                     </li>
                     <li>
-                        <a href="/#/employees"><i class="fa fa-fw fa-users"></i> Funcionários</a>
+                        <a ui-sref="stock"><i class="fa fa-fw fa-save "></i> Estoque</a>
                         
                     </li>
                     <li>
-                        <a href="/#/clients"><i class="fa fa-fw fa-book "></i> Clientes</a>
-                        
-                    </li>
-                    <li>
-                        <a href="/#/stock"><i class="fa fa-fw fa-save "></i> Estoque</a>
-                        
-                    </li>
-                    <li>
-                        <a href="/#/sales"><i class="fa fa-fw fa-automobile "></i> Vendas</a>
+                        <a ui-sref="sales"><i class="fa fa-fw fa-automobile "></i> Vendas</a>
                         
                     </li>
                     <li>
                         <a href="" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Relatórios <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="#">Relatório de Vendas</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="#">Relatório de Produtos</a>
                             </li>
                         </ul>
                     </li>
@@ -291,7 +309,6 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
-    <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-data-grid/dist/dataGrid.js"></script>
     <script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
@@ -311,6 +328,8 @@
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
@@ -336,6 +355,8 @@
         <script src="stock/controllers/stock_transfer.js"></script>
         <script src="sales/controllers/sale_edit.js"></script>
         <script src="sales/controllers/sale.js"></script>
+        <script src="behavior_sheet/controllers/behavior_sheet_edit.js"></script>
+        <script src="behavior_sheet/controllers/behavior_sheet.js"></script>
         <!--<script src="scripts/controllers/about.js"></script>-->
         <!-- endbuild -->
     <!-- Morris Charts JavaScript -->

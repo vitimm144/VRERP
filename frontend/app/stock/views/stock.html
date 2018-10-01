@@ -2,7 +2,7 @@
   <div  class="container-fluid">
     <h1> 
       Estoque
-      <a href="/#/stock/new"> 
+      <a ui-sref="stock.new"> 
         <i class="fa fa-plus-circle"></i> 
       </a>
     </h1>
@@ -29,7 +29,7 @@
             
           <a
             class="btn-primary"
-            ng-href="/#/stock/{{stock.id}}"
+            ng-href="stock.edit({stockId:{{stock.id}}})"
              > Editar </a>
           </button>
           <button
@@ -43,7 +43,7 @@
             class="btn-primary"
           > <a
             class="btn-primary"
-            ng-href="/#/stock/transfer/{{stock.id}}"
+            ng-href="stock.transfer({stockId:{{stock.id}}})"
              > Transferência </a> </button>
         </td>
       </tr>

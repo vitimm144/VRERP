@@ -44,3 +44,20 @@ class Employee(models.Model):
     class Meta:
         ordering = ['name', 'code']
 
+
+class BehaviorSheet(models.Model):
+    BEHAVIOR_TYPES = (
+        ('A', 'Advertência'),
+        ('P', 'Prêmio'),
+    )
+
+    employee = models.ForeignKey('Employee', verbose_name='Funcionário')
+    date = models.DateField(verbose_name='Data')
+    reason = models.TextField(verbose_name='Motivo')
+    behavior_type = models.CharField(verbose_name='Tipo', choices=BEHAVIOR_TYPES, max_length=2)
+
+    def __str__(self):
+        return self.behavior_type
+
+    class Meta:
+        ordering = ['date', 'behavior_type']

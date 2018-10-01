@@ -20,6 +20,7 @@ from rest_framework import routers
 from users.views import UserViewSet
 from users.views import EmployeeViewSet
 from users.views import CareerViewSet
+from users.views import BehaviorSheetViewSet
 from products.views import ProductViewSet
 from products.views import SaleViewSet
 from products.views import StockViewSet
@@ -38,6 +39,7 @@ router.register(r'employees', EmployeeViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'sales', SaleViewSet)
 router.register(r'stocks', StockViewSet)
+router.register(r'behavior_sheets', BehaviorSheetViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -2,7 +2,7 @@
   <div  class="container-fluid">
     <h1> 
       Produtos
-      <a href="/#/products/new"> 
+      <a ui-sref="products.new"> 
         <i class="fa fa-plus-circle"></i> 
       </a>
     </h1>
@@ -29,7 +29,7 @@
             
           <a
             class="btn-primary"
-            ng-href="/#/products/{{product.id}}"
+            ui-sref="products.edit({productId: {{product.id}}})"
              > Editar </a>
           </button>
           <button

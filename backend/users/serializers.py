@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from users.models import Career
 from users.models import Employee
+from users.models import BehaviorSheet
 
 
 # Serializers define the API representation.
@@ -38,4 +39,10 @@ class CareerSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
+        fields = '__all__'
+
+
+class BehaviorSheetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BehaviorSheet
         fields = '__all__'

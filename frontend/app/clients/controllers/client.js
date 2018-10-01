@@ -2,6 +2,8 @@ angular.module('frontendApp')
   .controller('ClientCtrl', function (
   $rootScope,
   $scope,
+  $state,
+//  $transition$,
   $http,
   AuthService,
   gridService,
@@ -22,7 +24,11 @@ angular.module('frontendApp')
       }, function(){
         console.log('erro ao pegar clients');
       });
-  } 
+  }
+  
+  client_ctrl.edit = function(id){
+    $state.go('clients.edit', {"clientId":id});
+  }
     
   update_grid();
   client_ctrl.excluir = function(url){
@@ -33,9 +39,13 @@ angular.module('frontendApp')
       console.log('erro ao pegar clients');
     }); 
   }
+//  $transition$.onSuccess(function(){
+//            console.log('Success');
+//  });
   $rootScope.$on('$stateChangeSuccess', function(
     event, toState, toParams, fromState, fromParams
   ){
+            console.log('TOSTATE');
             console.log(toState);
     if (toState.url == '/clients'){
       update_grid();
