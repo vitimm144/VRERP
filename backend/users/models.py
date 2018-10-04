@@ -83,11 +83,36 @@ class WorkSchedule(models.Model):
     year = models.CharField(verbose_name='Ano', max_length=4)
     shift_start = models.TimeField(verbose_name='Inicio do turno', default='08:30')
     shift_end = models.TimeField(verbose_name='Fim do turno', default='18:00')
-    employee = models.ForeignKey('Employee')
+    employee = models.ForeignKey('Employee', verbose_name='Funcionário')
 
     def __str__(self):
         return self.month
 
     class Meta:
         ordering = ['month', 'year']
+        verbose_name = "Controle de Ponto"
+        verbose_name_plural = "Controles de pontos"
 
+
+class WorkShift(models.Model):
+    ALLOWANCES = (
+        ('FO', 'Folga'),
+        ('AT', 'Atestado'),
+        ('DE', 'Declaração'),
+        ('DR', 'Descanso Remunerado'),
+    )
+    m_start = models.TimeField(verbose_name='Inicio do turno da manhã', default='08:30')
+    m_end = models.TimeField(verbose_name='Fim do turno da manhã', default='12:30')
+    a_start = models.TimeField(verbose_name='Inicio do turno da tarde', default='13:30')
+    a_end = models.TimeField(verbose_name='Fim do turno da tarde', default='18:00')
+    work_schedule = models.ForeignKey('WorkSchedule', verbose_name='Ponto', related_name="work_shifts")
+    allowance = models.CharField(verbose_name='Abonos', choices=ALLOWANCES, null=True, blank=True, max_length=2)
+    reduced_day = models.BooleanField(verbose_name='Jornada reduzida', default=False)
+
+    def __str__(self):
+        return "{0} - {1}".format(self.m_start, self.a_end)
+
+    class Meta:
+        ordering = ['m_start', 'a_end']
+        verbose_name = "Horário trabalhado"
+        verbose_name_plural = "Horários trabalhados"
