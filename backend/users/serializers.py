@@ -4,6 +4,7 @@ from rest_framework import routers, serializers, viewsets
 from users.models import Career
 from users.models import Employee
 from users.models import BehaviorSheet
+from users.models import WorkSchedule
 
 
 # Serializers define the API representation.
@@ -45,4 +46,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class BehaviorSheetSerializer(serializers.ModelSerializer):
     class Meta:
         model = BehaviorSheet
+        fields = '__all__'
+
+
+class WorkScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkSchedule
         fields = '__all__'

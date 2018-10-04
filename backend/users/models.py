@@ -61,3 +61,33 @@ class BehaviorSheet(models.Model):
 
     class Meta:
         ordering = ['date', 'behavior_type']
+
+
+class WorkSchedule(models.Model):
+    MONTHS = (
+        ('JAN', 'Janeiro'),
+        ('FEV', 'Feveireiro'),
+        ('MAR', 'Março'),
+        ('ABR', 'ABRIL'),
+        ('MAI', 'Maio'),
+        ('JUN', 'Junho'),
+        ('JUL', 'Julho'),
+        ('AGO', 'Agosto'),
+        ('SET', 'Setembro'),
+        ('OUT', 'Outubro'),
+        ('NOV', 'Novembro'),
+        ('DEZ', 'Dezembro'),
+    )
+
+    month = models.CharField(verbose_name='Mês', choices=MONTHS, max_length=3)
+    year = models.CharField(verbose_name='Ano', max_length=4)
+    shift_start = models.TimeField(verbose_name='Inicio do turno', default='08:30')
+    shift_end = models.TimeField(verbose_name='Fim do turno', default='18:00')
+    employee = models.ForeignKey('Employee')
+
+    def __str__(self):
+        return self.month
+
+    class Meta:
+        ordering = ['month', 'year']
+
