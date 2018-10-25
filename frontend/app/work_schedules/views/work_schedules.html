@@ -1,0 +1,55 @@
+<div ui-view="form" ng-cloak ng-grid="work_schedule_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Controle de Ponto
+      <a data-ui-sref="work_schedules.new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table data-datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Funcionario</th>
+        <!--<th>Inicio do turno</th>-->
+        <!--<th>Fim do turno</th>-->
+        <th>Mês</th>
+        <th>Ano</th>
+        <th>Funções</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="work_schedule in work_schedule_ctrl.work_schedules">
+        <td>{{ work_schedule_ctrl.employees[work_schedule.employee]}}</td>
+        <!--<td>{{ work_schedule.shift_start}}</td>-->
+        <!--<td>{{ work_schedule.shift_end}}</td>-->
+        <td>{{ work_schedule.month}}</td>
+        <td>{{ work_schedule.year}}</td>
+        <td>
+          <a data-ui-sref="work_schedules.work_shift_new({workScheduleId:{{work_schedule.id}}})"> 
+            <i class="fa fa-clock-o fa-lg"></i> 
+          </a>
+          <a data-ui-sref="work_schedules.work_shifts({workScheduleId:{{work_schedule.id}}})"> 
+            <i class="fa fa-list fa-lg "></i> 
+          </a>
+          
+        </td>
+        <td>
+            
+          <button
+            class="btn-primary"
+            type="button"
+            ng-click="work_schedule_ctrl.edit(work_schedule.id)"
+            ><i class="fa fa-pencil fa-lg"></i></button>
+          <button
+            type="button"
+            ng-click="work_schedule_ctrl.excluir('/api/work_schedules/' + work_schedule.id)"
+            class="btn-danger"
+          ><i class="fa fa-trash fa-lg"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

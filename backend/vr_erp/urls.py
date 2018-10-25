@@ -22,6 +22,7 @@ from users.views import EmployeeViewSet
 from users.views import CareerViewSet
 from users.views import BehaviorSheetViewSet
 from users.views import WorkScheduleViewSet
+from users.views import WorkShiftViewSet
 from products.views import ProductViewSet
 from products.views import SaleViewSet
 from products.views import StockViewSet
@@ -42,6 +43,7 @@ router.register(r'sales', SaleViewSet)
 router.register(r'stocks', StockViewSet)
 router.register(r'behavior_sheets', BehaviorSheetViewSet)
 router.register(r'work_schedules', WorkScheduleViewSet)
+router.register(r'work_shifts', WorkShiftViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

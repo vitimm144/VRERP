@@ -218,6 +218,68 @@ angular.module('frontendApp', [
           }
         }
       })
+      //WORK_SCHEDULE
+      .state('work_schedules', {
+        url: '/work_schedules',
+        views:{
+          'content': {
+            templateUrl: url_prefix +  'work_schedules/views/work_schedules.html',
+            controller: 'WorkScheduleCtrl',
+            controllerAs: 'work_schedule_ctrl',
+            authorize: true
+          }
+        }
+      }).state('work_schedules.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'work_schedules/views/work_schedule_form.html',
+            controller: 'WorkScheduleEditCtrl',
+            controllerAs: 'work_schedule_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('work_schedules.edit', {
+        url: '/{workScheduleId}',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'work_schedules/views/work_schedule_form.html',
+            controller: 'WorkScheduleEditCtrl',
+            controllerAs: 'work_schedule_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('work_schedules.work_shifts', {
+        url: '/work_shifts/{workScheduleId}',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'work_shifts/views/work_shifts.html',
+            controller: 'WorkShiftCtrl',
+            controllerAs: 'work_shift_ctrl',
+            authorize: true
+          }
+        }
+      }).state('work_schedules.work_shift_new', {
+        url: '/work_shifts/new/{workScheduleId}',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'work_shifts/views/work_shift_form.html',
+            controller: 'WorkShiftEditCtrl',
+            controllerAs: 'work_shift_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('work_schedules.work_shift_edit', {
+        url: '/work_shifts/new/{workScheduleId}/{workShiftId}',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'work_shifts/views/work_shift_form.html',
+            controller: 'WorkShiftEditCtrl',
+            controllerAs: 'work_shift_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
       //CLIENTS
       .state('clients', {
         url: '/clients',

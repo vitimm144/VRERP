@@ -3,6 +3,7 @@ angular.module('frontendApp')
   $rootScope,
   $scope,
   $http,
+  $transitions,
   AuthService,
   gridService,
   AUTH_TOKEN_PATH,
@@ -33,13 +34,10 @@ angular.module('frontendApp')
       console.log('erro ao pegar stock');
     }); 
   }
-  $rootScope.$on('$stateChangeSuccess', function(
-    event, toState, toParams, fromState, fromParams
-  ){
-            console.log(toState);
-    if (toState.url == '/stock'){
-      update_grid();
-    }
+  $transitions.onSuccess({}, function() {
+    console.log('Transition on success');
+    update_grid();
+    
   });
     
 });

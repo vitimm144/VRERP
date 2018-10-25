@@ -1,0 +1,186 @@
+<div id="wrapper">
+
+  <div id="page-wrapper">
+
+    <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">
+            Cadastro de Ponto
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-ticket"></i>  <a href="/#/work_shifts">Comportamento</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> Novo
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Informações</label>
+            <ul>
+              <li>{{work_shift_edit_ctrl.work_schedule.month}}</li>
+              <li>{{work_shift_edit_ctrl.work_schedule.year}}</li>
+              <li>{{work_shift_edit_ctrl.work_schedule.employee_name}}</li>
+            </ul>  
+          </div>
+          <form role="form">
+
+            <div class="form-group">
+              <label>Data</label>
+              <input
+                type="text"
+                class="form-control"
+                uib-datepicker-popup="yyyy-MM-dd"
+                ng-model="work_shift_edit_ctrl.work_shift.date" is-open="work_shift_edit_ctrl.popup1.opened"
+                datepicker-options="work_shift_edit_ctrl.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="work_shift_edit_ctrl.altInputFormats" />
+              <span class="input-group-btn">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  ng-click="work_shift_edit_ctrl.open1()"><i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </div>
+            
+            
+            <div class="form-group">
+              <label>Jornada reduzida</label>
+              <input
+                type="checkbox"
+                ng-model="work_shift_edit_ctrl.work_shift.reduced_day"
+                />
+              
+            </div>
+            <div class="form-group">
+              <label>Abonos</label>
+              <select
+                name="allowance"
+                class="form-control"
+                ng-model="work_shift_edit_ctrl.work_shift.allowance"
+                id="year"
+                ng-options="key as value for (key, value) in work_shift_edit_ctrl.allowances"
+                required>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Horarios</label>
+              <fieldset>
+                
+                <legend > Manhã </legend>
+                
+                <div class="row"> 
+                  <label class="col-xs-4 "> Entrada </label>
+                  <label class="col-xs-4"> Saida </label>
+                  
+                </div>
+                <div class="row"> 
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.m_start"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.m_end"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                </div>
+              </fieldset>
+              <fieldset>
+                
+                <legend > Tarde </legend>
+                
+                <div class="row"> 
+                  <label class="col-xs-4 "> Entrada </label>
+                  <label class="col-xs-4"> Saida </label>
+                  
+                </div>
+                <div class="row"> 
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.a_start"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.a_end"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                </div>
+              </fieldset>
+              <fieldset>
+                
+                <legend > Extra </legend>
+                
+                <div class="row"> 
+                  <label class="col-xs-4 "> Entrada </label>
+                  <label class="col-xs-4"> Saida </label>
+                  
+                </div>
+                <div class="row"> 
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.e_start"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                  <div
+                    class="col-xs-4"
+                    uib-timepicker
+                    ng-model="work_shift_edit_ctrl.work_shift.e_end"
+                    ng-change="changed()"
+                    show-seconds="true"
+                    show-meridian="false"
+                  ></div>
+                </div>
+              </fieldset>
+              
+              
+            </div>
+            <button
+              type="button"
+              ng-click="work_shift_edit_ctrl.submit()"
+              class="btn btn-default">Enviar</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+
+          </form>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+

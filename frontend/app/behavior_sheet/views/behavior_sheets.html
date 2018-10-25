@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="behavior_sheet in behavior_sheet_ctrl.behavior_sheets">
-        <td>{{ behavior_sheet.behavior_type}}</td>
+        <td>{{ behavior_sheet_ctrl.behavior_types[behavior_sheet.behavior_type]}}</td>
         <td>{{ behavior_sheet.date}}</td>
         <td>{{ behavior_sheet.reason}}</td>
         <td>

@@ -3,7 +3,7 @@ angular.module('frontendApp')
   $rootScope,
   $scope,
   $state,
-//  $transition$,
+  $transitions,
   $http,
   AuthService,
   gridService,
@@ -39,17 +39,10 @@ angular.module('frontendApp')
       console.log('erro ao pegar clients');
     }); 
   }
-//  $transition$.onSuccess(function(){
-//            console.log('Success');
-//  });
-  $rootScope.$on('$stateChangeSuccess', function(
-    event, toState, toParams, fromState, fromParams
-  ){
-            console.log('TOSTATE');
-            console.log(toState);
-    if (toState.url == '/clients'){
-      update_grid();
-    }
+  $transitions.onSuccess({}, function() {
+    console.log('Transition on success');
+    update_grid();
+    
   });
     
 });

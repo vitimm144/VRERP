@@ -1,0 +1,48 @@
+<div ui-view="form" ng-cloak ng-grid="work_shift_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1> 
+      Registros de Pontos
+      <a ui-sref="workschedule.work_shifts_new({workScheduleId:{{work_shift_ctrl.work_schedule_id}}})"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Entrada 1</th>
+        <th>Saída 1</th>
+        <th>Entrada 2</th>
+        <th>Saída 2</th>
+        <th>Entrada 3</th>
+        <th>Saída 3</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="work_shift in work_shift_ctrl.work_shifts">
+        <td>{{ work_shift_ctrl.date}}</td>
+        <td>{{ work_shift.m_start}}</td>
+        <td>{{ work_shift.m_end}}</td>
+        <td>{{ work_shift.a_start}}</td>
+        <td>{{ work_shift.a_end}}</td>
+        <td>{{ work_shift.e_start}}</td>
+        <td>{{ work_shift.e_end}}</td>
+        <td>
+            
+          <button
+            class="btn-primary"
+            type="button"
+            ng-click="work_shift_ctrl.edit(work_shift.id)"
+            ><i class="fa fa-pencil fa-lg"></i></button>
+          <button
+            type="button"
+            ng-click="work_shift_ctrl.excluir('/api/work_shifts/' + work_shift.id)"
+            class="btn-danger"><i class="fa fa-trash fa-lg"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

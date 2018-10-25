@@ -85,6 +85,11 @@ class WorkSchedule(models.Model):
     shift_end = models.TimeField(verbose_name='Fim do turno', default='18:00')
     employee = models.ForeignKey('Employee', verbose_name='Funcionário')
 
+    @property
+    def employee_name(self):
+        name = self.employee.name
+        return name
+
     def __str__(self):
         return self.month
 
@@ -105,6 +110,9 @@ class WorkShift(models.Model):
     m_end = models.TimeField(verbose_name='Fim do turno da manhã', default='12:30')
     a_start = models.TimeField(verbose_name='Inicio do turno da tarde', default='13:30')
     a_end = models.TimeField(verbose_name='Fim do turno da tarde', default='18:00')
+    e_start = models.TimeField(verbose_name='Inicio da hora extra', null=True, blank=True)
+    e_end = models.TimeField(verbose_name='Fim da hora extra', null=True, blank=True)
+    date = models.DateField(verbose_name='Data', default='2018-01-01')
     work_schedule = models.ForeignKey('WorkSchedule', verbose_name='Ponto', related_name="work_shifts")
     allowance = models.CharField(verbose_name='Abonos', choices=ALLOWANCES, null=True, blank=True, max_length=2)
     reduced_day = models.BooleanField(verbose_name='Jornada reduzida', default=False)

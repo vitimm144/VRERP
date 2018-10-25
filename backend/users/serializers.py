@@ -58,55 +58,55 @@ class WorkShiftSerializer(serializers.ModelSerializer):
 
 
 class WorkScheduleSerializer(serializers.ModelSerializer):
-    work_shifts = WorkShiftSerializer(many=True)
 
     class Meta:
         model = WorkSchedule
         fields = (
+            'id',
             'month',
             'year',
             'shift_start',
             'shift_end',
             'employee',
-            'work_shifts',
+            'employee_name',
         )
 
-    def create(self, validated_data):
-        return self.create_update(None, validated_data)
-
-    def update(self, instance, validated_data):
-        return self.create_update(instance, validated_data)
-
-    def create_update(self, instance, validated_data):
-        work_shifts = validated_data.pop('work_shifts', None)
-
-        if not instance:
-            instance = super(WorkScheduleSerializer, self).create(validated_data)
-        else:
-            for attr, value in validated_data.items():
-                setattr(instance, attr, value)
-
-        if work_shifts:
-            with transaction.atomic():
-                ids = []
-                for x in work_shifts:
-                    identifier = x.get('id')
-                    if identifier:
-                        ids.append(identifier)
-                instance.work_shifts.exclude(pk__in=ids).delete()
-
-                for work_shift in work_shifts:
-                    if not work_shift.get('id'):
-                        WorkShift.objects.create(
-                            work_schedule=instance,
-                            **work_shift
-                        )
-                    else:
-                        edited_work_shift = WorkShift.objects.get(pk=work_shift.get('id'))
-                        for attr, value in work_shift.items():
-                            setattr(edited_work_shift, attr, value)
-                            edited_work_shift.save()
-
-        instance.save()
-
-        return instance
+    # def create(self, validated_data):
+    #     return self.create_update(None, validated_data)
+    #
+    # def update(self, instance, validated_data):
+    #     return self.create_update(instance, validated_data)
+    #
+    # def create_update(self, instance, validated_data):
+    #     work_shifts = validated_data.pop('work_shifts', None)
+    #
+    #     if not instance:
+    #         instance = super(WorkScheduleSerializer, self).create(validated_data)
+    #     else:
+    #         for attr, value in validated_data.items():
+    #             setattr(instance, attr, value)
+    #
+    #     if work_shifts:
+    #         with transaction.atomic():
+    #             ids = []
+    #             for x in work_shifts:
+    #                 identifier = x.get('id')
+    #                 if identifier:
+    #                     ids.append(identifier)
+    #             instance.work_shifts.exclude(pk__in=ids).delete()
+    #
+    #             for work_shift in work_shifts:
+    #                 if not work_shift.get('id'):
+    #                     WorkShift.objects.create(
+    #                         work_schedule=instance,
+    #                         **work_shift
+    #                     )
+    #                 else:
+    #                     edited_work_shift = WorkShift.objects.get(pk=work_shift.get('id'))
+    #                     for attr, value in work_shift.items():
+    #                         setattr(edited_work_shift, attr, value)
+    #                         edited_work_shift.save()
+    #
+    #     instance.save()
+    #
+    #     return instance

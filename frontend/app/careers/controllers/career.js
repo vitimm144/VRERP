@@ -4,6 +4,7 @@ angular.module('frontendApp')
   $scope,
   $state,
   $http,
+  $transitions,
   AuthService,
   gridService,
   AUTH_TOKEN_PATH,
@@ -38,13 +39,10 @@ angular.module('frontendApp')
       console.log('erro ao pegar careers');
     }); 
   }
-  $rootScope.$on('$stateChangeSuccess', function(
-    event, toState, toParams, fromState, fromParams
-  ){
-            console.log(toState);
-    if (toState.url == '/careers'){
-      update_grid();
-    }
+  $transitions.onSuccess({}, function() {
+    console.log('Transition on success');
+    update_grid();
+    
   });
     
 });

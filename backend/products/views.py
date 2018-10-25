@@ -7,24 +7,28 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db import transaction
+import django_filters.rest_framework
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 
 class SaleViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SaleSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 
 class StockViewSet(viewsets.ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 
 class AvailabilityView(APIView):
