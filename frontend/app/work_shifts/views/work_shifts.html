@@ -2,10 +2,18 @@
   <div  class="container-fluid">
     <h1> 
       Registros de Pontos
-      <a ui-sref="workschedule.work_shifts_new({workScheduleId:{{work_shift_ctrl.work_schedule_id}}})"> 
+      <a data-ui-sref="workschedule.work_shifts_new({workScheduleId:{{work_shift_ctrl.work_schedule_id}}})"> 
         <i class="fa fa-plus-circle"></i> 
       </a>
     </h1>
+    <ol class="breadcrumb">
+      <li>
+        <i class="fa fa-ticket"></i>  <a data-ui-sref="work_schedules">controles de pontos</a>
+      </li>
+      <li class="active">
+        <i class="fa fa-edit"></i> Novo
+      </li>
+    </ol>
   </div>
   <table datatable="ng" class="row-border hover">
     <thead>
