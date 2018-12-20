@@ -18,12 +18,16 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().exclude(username='admin')
     serializer_class = UserSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('email', 'username',)
 
 
 class CareerViewSet(viewsets.ModelViewSet):
     queryset = Career.objects.all()
     serializer_class = CareerSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('title',)
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -31,6 +35,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('cpf', 'rg', 'code', 'career',)
 
 
 class BehaviorSheetViewSet(viewsets.ModelViewSet):

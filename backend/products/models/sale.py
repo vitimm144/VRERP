@@ -6,6 +6,7 @@ from products.models import Stock
 import locale
 from pprint import pprint
 
+
 class Sale(models.Model):
 
     STATUS = (

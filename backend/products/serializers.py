@@ -59,6 +59,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'description',
             'size',
             'amount',
+            'enable_deduction',
         )
 
     def create(self, validated_data):

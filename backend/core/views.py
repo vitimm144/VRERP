@@ -9,3 +9,4 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('name', 'email', 'cpf', 'rg', 'employee',)

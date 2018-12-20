@@ -4,6 +4,7 @@ from products.serializers import ProductSerializer, SaleSerializer, StockSeriali
 from products.models import Product, Sale, Stock
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import permissions
+from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db import transaction
@@ -15,13 +16,16 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('created', 'code', 'size',)
 
 
 class SaleViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SaleSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('status', 'client', 'saleswoman', 'user',)
+    search_fields = ('created',)
 
 
 class StockViewSet(viewsets.ModelViewSet):
@@ -29,6 +33,7 @@ class StockViewSet(viewsets.ModelViewSet):
     serializer_class = StockSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('product', 'user',)
 
 
 class AvailabilityView(APIView):
