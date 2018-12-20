@@ -14,6 +14,7 @@
         <th>Descrição</th>
         <th>Tamanho</th>
         <th>Quantidade</th>
+        <th>Desconto habilitado</th>
         <th>Opções</th>
       </tr>
     </thead>
@@ -23,6 +24,7 @@
         <td>{{ product.description}}</td>
         <td>{{ product.size}}</td>
         <td>{{ product.amount}}</td>
+        <td>{{ product.enable_deduction?'Sim':'Não'}}</td>
         <td>
             
           <button class="btn-primary" type="button">

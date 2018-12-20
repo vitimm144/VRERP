@@ -46,7 +46,9 @@ angular.module('frontendApp')
     });
   }else{
     product_edit_ctrl.method = 'POST';
-    product_edit_ctrl.product = {};
+    product_edit_ctrl.product = {
+      enable_deduction : true
+    };
   }
   
   product_edit_ctrl.submit = function(file) {
