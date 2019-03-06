@@ -7,6 +7,7 @@ from users.models import Employee
 from users.models import BehaviorSheet
 from users.models import WorkSchedule
 from users.models import WorkShift
+from pprint import pprint
 
 
 # Serializers define the API representation.
@@ -18,18 +19,31 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'is_staff',
+            'password',
 
         )
         extra_kwargs = {'password': {'write_only': True}}
 
-        def create(self, validated_data):
-            user = User(
-                email=validated_data['email'],
-                username=validated_data['username']
-            )
-            user.set_password(validated_data['password'])
-            user.save()
-            return user
+    def create(self, validated_data):
+        user = User(
+            email=validated_data['email'],
+            username=validated_data['username'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+    def update(self, instance, validated_data):
+        pprint(validated_data)
+        for attr, value in validated_data.items():
+            if attr == 'password':
+                continue
+            setattr(instance, attr, value)
+
+        if validated_data.get('password'):
+            instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
 
 
 class CareerSerializer(serializers.ModelSerializer):
