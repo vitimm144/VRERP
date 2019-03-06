@@ -12,5 +12,9 @@ class Stock(models.Model):
     class Meta:
         unique_together = (("product", "user"),)
 
+    @property
+    def price(self):
+        return self.product.price or 0.00
+
     def __str__(self):
         return self.product.code

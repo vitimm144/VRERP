@@ -54,6 +54,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'created',
             'modified',
             'amount',
+            'price',
         )
         fields = (
             'id',
@@ -66,6 +67,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'enable_deduction',
             'created',
             'modified',
+            'price',
         )
 
     def create(self, validated_data):
@@ -120,11 +122,15 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
+        read_only_fields = (
+            'price',
+        )
         fields = (
             'id',
             'product',
             'user',
-            'amount'
+            'amount',
+            'price',
         )
         depth = 1
 

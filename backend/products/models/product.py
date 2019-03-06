@@ -22,6 +22,11 @@ class Product(models.Model):
         amount = self.stock_set.all().aggregate(models.Sum('amount'))
         return amount.get("amount__sum") or 0
 
+    @property
+    def price(self):
+        price = self.products.get()
+        return price.value or 0.00
+
     class Meta:
         verbose_name = "Produto"
         verbose_name_plural = "Produtos"
