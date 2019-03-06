@@ -17,7 +17,9 @@ class PriceSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'in_use',
-            'value'
+            'value',
+            'created',
+            'modified',
         )
         read_only_fields = (
             'created',
@@ -32,7 +34,9 @@ class PlotSerializer(serializers.ModelSerializer):
             'id',
             'date',
             'plot',
-            'ploted_value'
+            'ploted_value',
+            'created',
+            'modified',
         )
         read_only_fields = (
             'created',
@@ -60,6 +64,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'size',
             'amount',
             'enable_deduction',
+            'created',
+            'modified',
         )
 
     def create(self, validated_data):
@@ -162,7 +168,9 @@ class PaySerializer(serializers.ModelSerializer):
             'plots',
             'value',
             'mode',
-            'plots_amount'
+            'plots_amount',
+            'created',
+            'modified',
         )
         read_only_fields = (
             'created',
@@ -247,6 +255,8 @@ class SaleSerializer(serializers.ModelSerializer):
             'total',
             'saleswoman_str',
             'user_str',
+            'created',
+            'modified',
         )
 
     def create(self, validated_data):

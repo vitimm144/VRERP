@@ -20,7 +20,8 @@ class ClientSerializer(serializers.ModelSerializer):
             'employee',
             'email',
             'facebook',
-
+            'created',
+            'modified',
         )
         read_only_fields = (
             'created',
