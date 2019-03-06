@@ -24,7 +24,7 @@ class SaleViewSet(viewsets.ModelViewSet):
     serializer_class = SaleSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
-    filter_fields = ('status', 'client', 'saleswoman', 'user',)
+    filter_fields = ('status', 'client', 'saleswoman', 'user', 'user__username')
     search_fields = ('created',)
 
 
@@ -33,7 +33,7 @@ class StockViewSet(viewsets.ModelViewSet):
     serializer_class = StockSerializer
     http_method_names = ['get', 'post', 'head', 'put', 'patch']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ('product', 'user',)
+    filter_fields = ('product', 'user', 'user__username')
 
 
 class AvailabilityView(APIView):
