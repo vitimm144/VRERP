@@ -1,9 +1,9 @@
 angular.module('frontendApp').service(
-  'alertService',['$rootScope', function($rootScope){
+  'alertService',['$rootScope', '$timeout', function($rootScope, $timeout){
 
   // expose a saveRecipe function from your service
   // that takes a recipe object
-//            console.log('chamou alertservice');
+  $rootScope.alertMessage = false;
   var type_dict = {
     
     danger:'alert alert-danger alert-dismissable',
@@ -13,10 +13,13 @@ angular.module('frontendApp').service(
     
   };
   this.message = function(message, type){
-//            console.log('chamou alertservice message');
     $rootScope.message = message;
-    $rootScope.type = type_dict[type];
     $rootScope.alertMessage = true;
+    $timeout(function(){
+      $rootScope.alertMessage = false;
+      $rootScope.message = "";
+      
+    }, 6000);
     
   }
   

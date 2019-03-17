@@ -9,7 +9,6 @@ angular.module('frontendApp')
   AUTH_TOKEN_PATH,
   AUTH_LOGOUT_PATH
 ) {
-  $rootScope.alertMessage = true;
   
   var sale_ctrl = this;
   var url = '/api/sales';

@@ -10,7 +10,6 @@ angular.module('frontendApp')
   AUTH_TOKEN_PATH,
   AUTH_LOGOUT_PATH
 ) {
-  $rootScope.alertMessage = true;
   var employee_ctrl = this;
   var url = '/api/employees';
   employee_ctrl.gridOptions = {};

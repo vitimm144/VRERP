@@ -21,7 +21,6 @@ angular.module('frontendApp')
     //user pass to it, and receive a array of parameters to be used in this 
     //callback
     $scope.loggedIn = true;
-    
     $rootScope.$on('event:loginRequired', function(evt){
             console.log('rootenventLoginRequired');
       $scope.loggedIn = false;
@@ -33,6 +32,9 @@ angular.module('frontendApp')
     $scope.$on('event:loginRequired', function(evt){
             console.log('scope enventLoginRequired');
       $scope.loggedIn = false;
+    });
+    $scope.$on('event:loginConfirmed', function(evt){
+      $scope.loggedIn = true;
     });
        
   });

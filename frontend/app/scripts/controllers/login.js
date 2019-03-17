@@ -17,6 +17,7 @@ angular.module('frontendApp')
   AUTH_LOGOUT_PATH) {
     var login_ctrl = this;
     $scope.loggedIn = true;
+    $rootScope.alertMessage = false;
     console.log('login ctrl');
     //function receive a callback as a parameter for execute any function that
     //user pass to it, and receive a array of parameters to be used in this 
@@ -25,6 +26,7 @@ angular.module('frontendApp')
     $scope.$on('event:loginConfirmed', function(evt){
       console.log('enventLoginConfirmed');
       $scope.loggedIn = true;
+      
     });
 //    login_ctrl.$on('event:loginRequired', function(evt){
 //            console.log('login_ctrl enventLoginRequired');
@@ -33,6 +35,7 @@ angular.module('frontendApp')
     $scope.$on('event:loginRequired', function(evt){
       console.log('scope enventLoginRequired');
       $scope.loggedIn = false;
+      $rootScope.loggedIn = false;
       AuthService.setToken( '' );
     });
     login_ctrl.user = {

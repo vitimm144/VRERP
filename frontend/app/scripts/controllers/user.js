@@ -9,7 +9,8 @@ angular.module('frontendApp')
   AUTH_TOKEN_PATH,
   AUTH_LOGOUT_PATH
 ) {
-  $rootScope.alertMessage = true;
+  $rootScope.alertMessage = false;
+  
   var user_ctrl = this;
   var url = '/api/users';
   user_ctrl.gridOptions = {};
@@ -39,6 +40,8 @@ angular.module('frontendApp')
     update_grid();
     
   });
-    
+//  $scope.$on('event:loginConfirmed', function(evt){
+//      $scope.loggedIn = true;
+//  });
 });
 

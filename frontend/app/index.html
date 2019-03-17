@@ -203,7 +203,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse" ng-show="loggedIn">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a ui-sref="main"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
                         <a ui-sref="users"><i class="fa fa-fw fa-user"></i> Usuários</a>
@@ -267,7 +267,6 @@
         <div class="row" ng-show="alertMessage">
           <div class="col-lg-12">
             <div class="{{type}}">
-              <button type="button" class="close" ng-click="alertMessage=false">&times;</button>
               <i class="fa fa-info-circle"></i> <span> {{ message }} </span> 
             </div>
           </div>

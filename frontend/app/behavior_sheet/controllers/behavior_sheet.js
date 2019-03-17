@@ -10,7 +10,6 @@ angular.module('frontendApp')
   AUTH_TOKEN_PATH,
   AUTH_LOGOUT_PATH
 ) {
-  $rootScope.alertMessage = true;
   var behavior_sheet_ctrl = this;
   var url = '/api/behavior_sheets';
   behavior_sheet_ctrl.gridOptions = {};
