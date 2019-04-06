@@ -15,7 +15,7 @@ class Product(models.Model):
     size = models.CharField(choices=SIZE, verbose_name="Tamanho", max_length=3)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
-    enable_deduction = models.BooleanField('Habilitar desconto', default=True)
+    enable_deduction = models.BooleanField('Habilitar desconto', default=False)
 
     @property
     def amount(self):

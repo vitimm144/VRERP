@@ -10,7 +10,7 @@ class ProductSale(models.Model):
     )
     price = models.ForeignKey(
         "Price",
-        verbose_name="Produto",
+        verbose_name="Preço",
         related_name="price_sale",
         on_delete=models.DO_NOTHING
     )
@@ -19,6 +19,12 @@ class ProductSale(models.Model):
         default=1
     )
     product_sale = models.ForeignKey("Sale", related_name='products', default=None, on_delete=models.DO_NOTHING)
+
+    enable_deduction = models.BooleanField('Habilitar desconto', default=False)
+
+    @property
+    def price_value(self):
+        return self.price.value or 0.00
 
     def __str__(self):
         return self.product.description

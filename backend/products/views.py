@@ -62,15 +62,15 @@ class StockTransferView(APIView):
         content = dict()
         stock = request.data.get('stock')
         product = stock.get('product')
-        sale = request.data.get('user')
+        saleswoman = request.data.get('user')
         amount = request.data.get('amount')
         try:
             with transaction.atomic():
                 #verificar se existe o produto no estoque do usuario a ser transferido
-                stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=sale)
+                stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=saleswoman)
                 # import ipdb; ipdb.set_trace()
                 if len(stock_to_filter) == 0:
-                    stock_to = Stock.objects.create(product_id=product.get('id'), user_id=sale, amount=amount)
+                    stock_to = Stock.objects.create(product_id=product.get('id'), user_id=saleswoman, amount=amount)
                 else:
                     stock_to = stock_to_filter[0]
                     stock_to.amount += amount

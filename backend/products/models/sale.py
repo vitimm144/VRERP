@@ -50,7 +50,9 @@ class Sale(models.Model):
     def total(self):
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
         result = self.payments.all().aggregate(models.Sum('value'))
-        valor = locale.currency(result.get('value__sum', '0'))
+        valor = locale.currency(
+            result.get('value__sum', 0.00) or 0.00
+        )
         return valor
 
     @property

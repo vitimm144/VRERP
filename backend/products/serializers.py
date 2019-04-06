@@ -5,9 +5,6 @@ from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
 from pprint import pprint
-from django.db.models import Max
-
-from users.serializers import UserSerializer
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -90,7 +87,6 @@ class ProductSerializer(serializers.ModelSerializer):
         # import ipdb; ipdb.set_trace()
         if products:
             with transaction.atomic():
-                # Treatment to delete campaign field.
                 ids = []
                 for x in products:
                     identifier = x.get('id')
@@ -232,9 +228,33 @@ class ProductSaleSerializer(serializers.ModelSerializer):
             'id',
             'product',
             'amount',
-            'price'
+            'price',
+            'price_value',
+            'enable_deduction'
+        )
+        read_only_fields = (
+            'price_value',
         )
 
+
+
+    def create(self, validated_data):
+        return self.create_update(None, validated_data)
+
+    def update(self, instance, validated_data):
+        return self.create_update(instance, validated_data)
+
+    def create_update(self, instance, validated_data):
+        # import ipdb; ipdb.set_trace()
+        if not instance:
+            instance = super(ProductSaleSerializer, self).create(validated_data)
+        else:
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+
+        instance.save()
+
+        return instance
 
 class SaleSerializer(serializers.ModelSerializer):
     products = ProductSaleSerializer(many=True)
@@ -275,7 +295,7 @@ class SaleSerializer(serializers.ModelSerializer):
         products = validated_data.pop('products', None)
         payments = validated_data.pop('payments', None)
 
-        pprint(validated_data)
+        # import ipdb; ipdb.set_trace()
         if not instance:
             instance = super(SaleSerializer, self).create(validated_data)
         else:
@@ -293,9 +313,16 @@ class SaleSerializer(serializers.ModelSerializer):
 
                 for product in products:
                     if not product.get('id'):
+                        product_product = product.get('product')
+                        price = product.get('price')
+                        amount = product.get('amount')
+
                         ProductSale.objects.create(
                             product_sale=instance,
-                            **product
+                            product=product_product,
+                            price=price,
+                            amount=amount,
+                            enable_deduction=product_product.enable_deduction
                         )
                     else:
                         edited_product = ProductSale.objects.get(pk=product.get('id'))

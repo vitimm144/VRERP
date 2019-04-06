@@ -60,12 +60,13 @@ class ProductTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         value = response.data
 
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         price = value.get('products')
         self.assertEqual(price[0].get('value'), "20.00")
 
 
 class SaleTestCase(APITestCase):
+    user = {}
 
     def setUp(self):
         # Setting user credentials. See fixtures files for more details.
@@ -96,7 +97,27 @@ class SaleTestCase(APITestCase):
             data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        value = response.data
+        product1 = response.data
+        data = {
+            "description": "Jeans",
+            "code": "007",
+            "enable_deduction": True,
+            "size": "P",
+            "amount": 10,
+            "products": [
+                {
+                    "value": "120.00",
+                },
+
+            ],
+
+        }
+        response = self.client.post(
+            reverse('product-list'),
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        product2 = response.data
 
         career = Career.objects.create(
             title='Vendedora',
@@ -115,10 +136,10 @@ class SaleTestCase(APITestCase):
 
         data = {
             "description": "Cebola",
-            "products": [value],
+            "products": [product1, product2],
             "payments": [
                 {
-                    "value": 200.00,
+                    "value": 320.00,
                     "mode": "A"
                 },
                 {
@@ -141,16 +162,15 @@ class SaleTestCase(APITestCase):
                 }
             ],
             "saleswoman": employee.id,
+            "user": self.user.id,
             "status": "F",
             "deduction": 0.05
-
         }
         response = self.client.post(
-            reverse('sales-list'),
+            reverse('sale-list'),
             data
         )
-        import ipdb;
-        ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
