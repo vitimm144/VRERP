@@ -91,3 +91,37 @@ class StockTransferView(APIView):
         return Response(status=200, data=content)
 
 
+class SaleTradeView(APIView):
+    # permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None, *args, **kwargs):
+        content = dict()
+        sale = request.data.get('sale')
+        trade = request.data.get('trade')
+        try:
+            with transaction.atomic():
+                sale_instance = Sale.objects.get(sale.get('id'))
+
+                #verificar se existe o produto no estoque do usuario a ser transferido
+                # stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=saleswoman)
+                # import ipdb; ipdb.set_trace()
+                # if len(stock_to_filter) == 0:
+                #     stock_to = Stock.objects.create(product_id=product.get('id'), user_id=saleswoman, amount=amount)
+                # else:
+                #     stock_to = stock_to_filter[0]
+                    # stock_to.amount += amount
+                    # stock_to.save()
+
+                #decrementando o stock do produto
+                # stock_from = Stock.objects.get(id=stock.get('id'))
+                # stock_from.amount -= amount
+                # stock_from.save()
+        except Exception as e:
+            content = {'success': False, 'message': e}
+            print(e)
+            return Response(status=400, data=content)
+
+        # import ipdb; ipdb.set_trace()
+
+        content = {'success': True}
+        return Response(status=200, data=content)

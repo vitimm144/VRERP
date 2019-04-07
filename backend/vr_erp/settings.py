@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
     'DEFAULT_MODEL_SERIALIZER_CLASS':
         'rest_framework.serializers.ModelSerializer',
 
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10000000
 }
 
 # Internationalization

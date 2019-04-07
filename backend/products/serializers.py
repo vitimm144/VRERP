@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from products.models import Product, ProductSale
+from products.models import Product, ProductSale, ProductTrade
 from products.models import Price, Pay, Plot, Stock
 from products.models import Sale
 from django.db import transaction, IntegrityError
@@ -221,6 +221,17 @@ class PaySerializer(serializers.ModelSerializer):
         return instance
 
 
+class ProductTradeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTrade
+        fields = (
+            'id',
+            'product',
+            'amount',
+            'price',
+        )
+
+
 class ProductSaleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSale
@@ -245,7 +256,6 @@ class ProductSaleSerializer(serializers.ModelSerializer):
         return self.create_update(instance, validated_data)
 
     def create_update(self, instance, validated_data):
-        # import ipdb; ipdb.set_trace()
         if not instance:
             instance = super(ProductSaleSerializer, self).create(validated_data)
         else:
@@ -258,6 +268,7 @@ class ProductSaleSerializer(serializers.ModelSerializer):
 
 class SaleSerializer(serializers.ModelSerializer):
     products = ProductSaleSerializer(many=True)
+    products_trade = ProductTradeSerializer(many=True, required=False)
     payments = PaySerializer(many=True)
 
     class Meta:
@@ -272,6 +283,7 @@ class SaleSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'products',
+            'products_trade',
             'payments',
             'status',
             'saleswoman',
@@ -294,8 +306,8 @@ class SaleSerializer(serializers.ModelSerializer):
     def create_update(self, instance, validated_data):
         products = validated_data.pop('products', None)
         payments = validated_data.pop('payments', None)
+        products_trade = validated_data.pop('products_trade', None)
 
-        # import ipdb; ipdb.set_trace()
         if not instance:
             instance = super(SaleSerializer, self).create(validated_data)
         else:
@@ -303,6 +315,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
 
         if products:
+            pprint(products)
             with transaction.atomic():
                 ids = []
                 for x in products:
@@ -330,6 +343,33 @@ class SaleSerializer(serializers.ModelSerializer):
                             setattr(edited_product, attr, value)
                             edited_product.save()
 
+        if products_trade:
+            with transaction.atomic():
+                ids = []
+                for x in products_trade:
+                    identifier = x.get('id')
+                    if identifier:
+                        ids.append(identifier)
+                instance.products_trade.exclude(pk__in=ids).delete()
+
+                for trade in products_trade:
+                    if not trade.get('id'):
+                        product_product = trade.get('product')
+                        price = trade.get('price')
+                        amount = trade.get('amount')
+
+                        ProductTrade.objects.create(
+                            sale=instance,
+                            product=product_product,
+                            price=price,
+                            amount=amount,
+                        )
+                    else:
+                        edited_product = ProductTrade.objects.get(pk=product.get('id'))
+                        for attr, value in product.items():
+                            setattr(edited_product, attr, value)
+                            edited_product.save()
+
         if payments:
             with transaction.atomic():
                 ids = []
@@ -337,7 +377,6 @@ class SaleSerializer(serializers.ModelSerializer):
                     identifier = x.get('id')
                     if identifier:
                         ids.append(identifier)
-                # import ipdb; ipdb.set_trace()
                 instance.payments.exclude(pk__in=ids).delete()
 
                 for pay in payments:
