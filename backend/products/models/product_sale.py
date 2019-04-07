@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from products.models import Stock
 
 
 class ProductSale(models.Model):
@@ -28,3 +31,19 @@ class ProductSale(models.Model):
 
     def __str__(self):
         return self.product.description
+
+
+
+@receiver(post_save, sender=ProductSale)
+def save_sale(sender, instance, **kwargs):
+    # Decrementando a quantidade de produtos no estoque ao final de cada venda.
+    created = kwargs.get('created')
+    if created:
+
+        try:
+            stock = Stock.objects.filter(product=instance.product, user=instance.product_sale.user)[0]
+            if stock:
+                stock.amount -= instance.amount
+                stock.save()
+        except Exception as e:
+            print(e)

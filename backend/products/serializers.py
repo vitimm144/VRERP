@@ -172,6 +172,7 @@ class PaySerializer(serializers.ModelSerializer):
             'mode',
             'plots_amount',
             'created',
+            'pay_sale',
             'modified',
         )
         read_only_fields = (

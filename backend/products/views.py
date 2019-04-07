@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from users.serializers import UserSerializer
-from products.serializers import ProductSerializer, SaleSerializer, StockSerializer
-from products.models import Product, Sale, Stock
+from products.serializers import ProductSerializer, SaleSerializer, StockSerializer, PaySerializer
+from products.models import Product, Sale, Stock, ProductSale, ProductTrade, Pay
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import permissions
 from rest_framework import filters
@@ -62,15 +62,14 @@ class StockTransferView(APIView):
         content = dict()
         stock = request.data.get('stock')
         product = stock.get('product')
-        saleswoman = request.data.get('user')
+        store = request.data.get('user')
         amount = request.data.get('amount')
         try:
             with transaction.atomic():
                 #verificar se existe o produto no estoque do usuario a ser transferido
-                stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=saleswoman)
-                # import ipdb; ipdb.set_trace()
+                stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=store)
                 if len(stock_to_filter) == 0:
-                    stock_to = Stock.objects.create(product_id=product.get('id'), user_id=saleswoman, amount=amount)
+                    stock_to = Stock.objects.create(product_id=product.get('id'), user_id=store, amount=amount)
                 else:
                     stock_to = stock_to_filter[0]
                     stock_to.amount += amount
@@ -97,28 +96,36 @@ class SaleTradeView(APIView):
     def post(self, request, format=None, *args, **kwargs):
         content = dict()
         sale = request.data.get('sale')
-        trade = request.data.get('trade')
+        traded = request.data.get('traded')
+
+
         try:
             with transaction.atomic():
-                sale_instance = Sale.objects.get(sale.get('id'))
+                sale_instance = Sale.objects.get(id=sale.get('id'))
+                sale['products_trade'] = traded
+                serialized_sale = SaleSerializer(data=sale)
+                serialized_sale.is_valid()
+                validated_data = serialized_sale.validated_data
+                serialized_sale.update(sale_instance, validated_data)
 
-                #verificar se existe o produto no estoque do usuario a ser transferido
-                # stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=saleswoman)
-                # import ipdb; ipdb.set_trace()
-                # if len(stock_to_filter) == 0:
-                #     stock_to = Stock.objects.create(product_id=product.get('id'), user_id=saleswoman, amount=amount)
-                # else:
-                #     stock_to = stock_to_filter[0]
-                    # stock_to.amount += amount
-                    # stock_to.save()
+                if traded:
+                    for trade in traded:
+                        amount = trade.get('amount')
+                        #Devolvendo o produto trocado ao estoque.
+                        stock_to_filter = Stock.objects.filter(product__id=trade.get('id'), user__id=sale.get('user'))
+                        if len(stock_to_filter) == 0:
+                            stock_to = Stock.objects.create(
+                                product__id=trade.get('id'),
+                                user__id=sale.get('user'),
+                                amount=trade.get('amount')
+                             )
+                        else:
+                            stock_to = stock_to_filter[0]
+                            stock_to.amount += amount
+                            stock_to.save()
 
-                #decrementando o stock do produto
-                # stock_from = Stock.objects.get(id=stock.get('id'))
-                # stock_from.amount -= amount
-                # stock_from.save()
         except Exception as e:
-            content = {'success': False, 'message': e}
-            print(e)
+            content = {'success': False, 'message': 'Error while trading'}
             return Response(status=400, data=content)
 
         # import ipdb; ipdb.set_trace()

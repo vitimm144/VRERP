@@ -87,8 +87,39 @@ DATABASES = {
         'PASSWORD': 'vrerp',
         'HOST': 'localhost',
         'PORT': '',
+        'TEST': {
+            'NAME': 'test_vrep',
+        },
     }
 }
+
+# Internationalization
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
+
+LANGUAGE_CODE = 'pt-BR'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = str(PROJECT_ROOT.joinpath('media'))
+
+
+STATIC_ROOT = '/home/victor/devel/vr_erp/backend/static'
+
+STATIC_URL = '/static/'
 
 
 # Password validation
@@ -136,36 +167,12 @@ REST_FRAMEWORK = {
     'DEFAULT_MODEL_SERIALIZER_CLASS':
         'rest_framework.serializers.ModelSerializer',
 
-    'PAGE_SIZE': 10000000
+    'PAGE_SIZE': 10000000,
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-DATE_INPUT_FORMATS = ['%d/%m/%Y']
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = str(PROJECT_ROOT.joinpath('media'))
-
-
-STATIC_ROOT = '/home/victor/devel/vr_erp/backend/static'
-
-STATIC_URL = '/static/'
 # Add it on your settings.py file
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),
