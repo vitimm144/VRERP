@@ -32,11 +32,13 @@ from django.conf import settings
 from products.views import AvailabilityView
 from products.views import StockTransferView
 from products.views import SaleTradeView
+from products.views import ColorViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'products', ProductViewSet)
+router.register(r'colors', ColorViewSet)
 router.register(r'careers', CareerViewSet)
 router.register(r'employees', EmployeeViewSet)
 router.register(r'clients', ClientViewSet)

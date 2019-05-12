@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from users.serializers import UserSerializer
-from products.serializers import ProductSerializer, SaleSerializer, StockSerializer, PaySerializer
-from products.models import Product, Sale, Stock, ProductSale, ProductTrade, Pay
+from products.serializers import ProductSerializer, SaleSerializer, StockSerializer, PaySerializer, ColorSerializer
+from products.models import Product, Sale, Stock, ProductSale, ProductTrade, Pay, Color
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import permissions
 from rest_framework import filters
@@ -10,6 +10,14 @@ from rest_framework.views import APIView
 from django.db import transaction
 from pprint import pprint
 import django_filters.rest_framework
+
+
+class ColorViewSet(viewsets.ModelViewSet):
+    queryset = Color.objects.all()
+    serializer_class = ColorSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('created', 'code', 'name',)
 
 
 class ProductViewSet(viewsets.ModelViewSet):

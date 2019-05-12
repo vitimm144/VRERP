@@ -1,9 +1,23 @@
 from django.conf.urls import url, include
 from products.models import Product, ProductSale, ProductTrade
-from products.models import Price, Pay, Plot, Stock
+from products.models import Price, Pay, Plot, Stock, Color
 from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
+
+
+
+class ColorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Color
+        fields = (
+            'id',
+            'created',
+            'modified',
+            'code',
+            'name',
+        )
 
 
 class PriceSerializer(serializers.ModelSerializer):

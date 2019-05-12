@@ -1,3 +1,4 @@
+from products.models.color import Color
 from products.models.product import Product
 from products.models.price import Price
 from products.models.plot import Plot
