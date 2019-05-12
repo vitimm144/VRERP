@@ -8,6 +8,7 @@ from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db import transaction
+from pprint import pprint
 import django_filters.rest_framework
 
 
@@ -114,7 +115,7 @@ class SaleTradeView(APIView):
                         #Devolvendo o produto trocado ao estoque.
                         stock_to_filter = Stock.objects.filter(product__id=trade.get('id'), user__id=sale.get('user'))
                         if len(stock_to_filter) == 0:
-                            stock_to = Stock.objects.create(
+                            Stock.objects.create(
                                 product__id=trade.get('id'),
                                 user__id=sale.get('user'),
                                 amount=trade.get('amount')

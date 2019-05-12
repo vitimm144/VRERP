@@ -36,3 +36,5 @@ Unipath==1.1
 virtualenv==16.0.0
 virtualenv-clone==0.3.0
 wcwidth==0.1.7
+mock==2.0.0
+

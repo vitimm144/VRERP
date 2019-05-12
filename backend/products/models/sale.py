@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.conf import settings
 
 import locale
-from pprint import pprint
 
 
 class Sale(models.Model):

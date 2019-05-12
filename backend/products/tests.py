@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from products.models import Product, Sale, Stock
+from products.models import Product, Sale, Stock, Price
 from users.models import Employee, Career
 from django.contrib.auth.models import User
 
@@ -63,6 +63,42 @@ class ProductTestCase(APITestCase):
         # import ipdb; ipdb.set_trace()
         price = value.get('products')
         self.assertEqual(price[0].get('value'), "20.00")
+
+
+class StockTestCase(APITestCase):
+    user = dict()
+    product= dict()
+    price= dict()
+    def setUp(self):
+        # Setting user credentials. See fixtures files for more details.
+        self.user = User.objects.create_superuser(
+            username='admin', email='vs@vs.com', password='123'
+        )
+        self.client.force_authenticate(
+            user=self.user,
+            token=self.user.auth_token
+        )
+
+        self.product = Product.objects.create(
+            code="001",
+            description='Tenis',
+            size='P'
+
+        )
+        # self.price = Price.objects.create(
+        #     value=200.00,
+        #     product=self.product
+        # )
+
+
+    def test_create(self):
+        stock = Stock.objects.create(
+            product=self.product,
+            user=self.user,
+            amount=10
+        )
+        self.assertTrue(stock.pk)
+
 
 
 class SaleTestCase(APITestCase):
@@ -177,12 +213,18 @@ class SaleTestCase(APITestCase):
             "status": "F",
             "deduction": 0.05
         }
+        # import ipdb; ipdb.set_trace()
         response = self.client.post(
             reverse('sale-list'),
             data
         )
-        # import ipdb; ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        sale = response.json()
+        # import ipdb; ipdb.set_trace()
+        self.assertEqual(len(sale.get('payments')), 2)
+        payment = sale.get('payments')[1]
+        self.assertEqual(len(payment.get('plots')), 2)
+
 
     def test_trade(self):
         data = {
@@ -215,6 +257,9 @@ class SaleTestCase(APITestCase):
         response = self.client.get(reverse('product-list'))
         json_response = response.json()
         products = []
+        ##################################################################
+        # Criando a venda para poder realizar a troca
+        ##################################################################
         for prod in json_response.get('results'):
             products.append(
                 {
@@ -262,7 +307,12 @@ class SaleTestCase(APITestCase):
         )
         # import ipdb; ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        ##################################################################
+        ##################################################################
 
+        ##################################################################
+        # Criando novo prouto para poder fazer a troca
+        ##################################################################
         data = {
             "description": "Camisa Polo",
             "code": "010",
@@ -292,6 +342,7 @@ class SaleTestCase(APITestCase):
             amount=10
         )
         self.assertEqual(len(Stock.objects.all()), 4)
+        ##################################################################
 
         response = self.client.get(
             reverse('sale-list'),
@@ -332,7 +383,11 @@ class SaleTestCase(APITestCase):
         self.assertEqual(len(products), 3)
         traded = sale.products_trade.all()
         self.assertEqual(len(traded), 1)
-        import ipdb; ipdb.set_trace()
+
+        self.assertEqual(products[0].product.amount, 10)
+        self.assertEqual(products[1].product.amount, 9)
+        self.assertEqual(products[2].product.amount, 9)
+
 
 
 

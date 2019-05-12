@@ -4,7 +4,6 @@ from products.models import Price, Pay, Plot, Stock
 from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
-from pprint import pprint
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -19,6 +18,7 @@ class PriceSerializer(serializers.ModelSerializer):
             'modified',
         )
         read_only_fields = (
+            'id',
             'created',
             'modified',
         )
@@ -36,6 +36,7 @@ class PlotSerializer(serializers.ModelSerializer):
             'modified',
         )
         read_only_fields = (
+            'id',
             'created',
             'modified',
         )
@@ -52,6 +53,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'modified',
             'amount',
             'price',
+            'id',
         )
         fields = (
             'id',
@@ -74,8 +76,6 @@ class ProductSerializer(serializers.ModelSerializer):
         return self.create_update(instance, validated_data)
 
     def create_update(self, instance, validated_data):
-        # print()
-        # pprint(validated_data)
         products = validated_data.pop('products', [])
 
         if not instance:
@@ -84,7 +84,7 @@ class ProductSerializer(serializers.ModelSerializer):
         else:
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
-        # import ipdb; ipdb.set_trace()
+
         if products:
             with transaction.atomic():
                 ids = []
@@ -200,9 +200,15 @@ class PaySerializer(serializers.ModelSerializer):
                 # Treatment to delete campaign field.
                 ids = []
                 for x in plots:
-                    identifier = x.get('id')
-                    if identifier:
-                        ids.append(identifier)
+                    try:
+                        pl = instance.plots.get(plot=x.get('plot'))
+                    except:
+                        pl = None
+
+
+                    if pl:
+                        x['id'] = pl.id
+                        ids.append(pl.id)
                 instance.plots.exclude(pk__in=ids).delete()
 
                 for plot in plots:
@@ -249,24 +255,6 @@ class ProductSaleSerializer(serializers.ModelSerializer):
         )
 
 
-
-    def create(self, validated_data):
-        return self.create_update(None, validated_data)
-
-    def update(self, instance, validated_data):
-        return self.create_update(instance, validated_data)
-
-    def create_update(self, instance, validated_data):
-        if not instance:
-            instance = super(ProductSaleSerializer, self).create(validated_data)
-        else:
-            for attr, value in validated_data.items():
-                setattr(instance, attr, value)
-
-        instance.save()
-
-        return instance
-
 class SaleSerializer(serializers.ModelSerializer):
     products = ProductSaleSerializer(many=True)
     products_trade = ProductTradeSerializer(many=True, required=False)
@@ -280,6 +268,7 @@ class SaleSerializer(serializers.ModelSerializer):
             'total',
             'saleswoman_str',
             'user_str',
+            'id',
         )
         fields = (
             'id',
@@ -297,6 +286,7 @@ class SaleSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         )
+        # depth = 1
 
     def create(self, validated_data):
         return self.create_update(None, validated_data)
@@ -316,14 +306,21 @@ class SaleSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
 
         if products:
-            pprint(products)
             with transaction.atomic():
                 ids = []
+
                 for x in products:
-                    identifier = x.get('id')
-                    if identifier:
-                        ids.append(identifier)
-                instance.products.exclude(pk__in=ids).delete()
+                    try:
+                        #recuperando o id removido pelo validated data.
+                        prod_sale = instance.products.get(product=x.get('product'))
+                    except:
+                        prod_sale = None
+
+                    if prod_sale:
+                        x['id'] = prod_sale.id
+                        ids.append(prod_sale.id)
+
+                instance.products.exclude(id__in=ids).delete()
 
                 for product in products:
                     if not product.get('id'):
@@ -348,9 +345,17 @@ class SaleSerializer(serializers.ModelSerializer):
             with transaction.atomic():
                 ids = []
                 for x in products_trade:
-                    identifier = x.get('id')
-                    if identifier:
-                        ids.append(identifier)
+
+                    try:
+                        prod_trade = instance.products_trade.get(product=x.get('product'))
+                    except:
+                        prod_trade = None
+
+
+                    if prod_trade:
+                        x['id'] = prod_trade.id
+                        ids.append(prod_trade.id)
+
                 instance.products_trade.exclude(pk__in=ids).delete()
 
                 for trade in products_trade:
