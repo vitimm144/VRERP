@@ -10,12 +10,17 @@ class Product(models.Model):
         ('GG', 'GG'),
     )
     picture = models.ImageField(null=True, verbose_name="Foto", upload_to='products/')
-    code = models.CharField(unique=True, verbose_name="Código", max_length=255)
+    code = models.CharField(verbose_name="Código", max_length=255)
     description = models.TextField(null=True, blank=True, verbose_name="Descrição")
     size = models.CharField(choices=SIZE, verbose_name="Tamanho", max_length=3)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
     enable_deduction = models.BooleanField('Habilitar desconto', default=False)
+    color = models.ForeignKey(
+        'Color',
+        verbose_name="Cor",
+        on_delete=models.DO_NOTHING,
+    )
 
     @property
     def amount(self):
@@ -28,8 +33,14 @@ class Product(models.Model):
         return price.value or 0.00
 
     class Meta:
+
+        ordering = ["id", "code"]
         verbose_name = "Produto"
         verbose_name_plural = "Produtos"
+        unique_together = ['code', 'size', 'color']
+        indexes = [
+            models.Index(fields=['code', 'size', 'color']),
+        ]
 
     def __str__(self):
         return self.code

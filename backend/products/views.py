@@ -121,10 +121,10 @@ class SaleTradeView(APIView):
                     for trade in traded:
                         amount = trade.get('amount')
                         #Devolvendo o produto trocado ao estoque.
-                        stock_to_filter = Stock.objects.filter(product__id=trade.get('id'), user__id=sale.get('user'))
+                        stock_to_filter = Stock.objects.filter(product_id=trade.get('product'), user_id=sale.get('user'))
                         if len(stock_to_filter) == 0:
-                            Stock.objects.create(
-                                product__id=trade.get('id'),
+                            stock_to = Stock.objects.create(
+                                product__id=trade.get('product'),
                                 user__id=sale.get('user'),
                                 amount=trade.get('amount')
                              )

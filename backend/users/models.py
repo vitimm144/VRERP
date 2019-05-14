@@ -36,7 +36,7 @@ class Employee(models.Model):
     address = models.TextField(null=True, blank=True, verbose_name="Endereço")
     code = models.CharField(unique=True, verbose_name="Código", max_length=255)
     salary = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Salário")
-    career = models.ForeignKey('Career', verbose_name='Função')
+    career = models.ForeignKey('Career', verbose_name='Função', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
@@ -51,7 +51,7 @@ class BehaviorSheet(models.Model):
         ('P', 'Prêmio'),
     )
 
-    employee = models.ForeignKey('Employee', verbose_name='Funcionário')
+    employee = models.ForeignKey('Employee', verbose_name='Funcionário', on_delete=models.DO_NOTHING)
     date = models.DateField(verbose_name='Data')
     reason = models.TextField(verbose_name='Motivo')
     behavior_type = models.CharField(verbose_name='Tipo', choices=BEHAVIOR_TYPES, max_length=2)
@@ -83,7 +83,7 @@ class WorkSchedule(models.Model):
     year = models.CharField(verbose_name='Ano', max_length=4)
     shift_start = models.TimeField(verbose_name='Inicio do turno', default='08:30')
     shift_end = models.TimeField(verbose_name='Fim do turno', default='18:00')
-    employee = models.ForeignKey('Employee', verbose_name='Funcionário')
+    employee = models.ForeignKey('Employee', verbose_name='Funcionário', on_delete=models.DO_NOTHING)
 
     @property
     def employee_name(self):
@@ -113,7 +113,7 @@ class WorkShift(models.Model):
     e_start = models.TimeField(verbose_name='Inicio da hora extra', null=True, blank=True)
     e_end = models.TimeField(verbose_name='Fim da hora extra', null=True, blank=True)
     date = models.DateField(verbose_name='Data', default='2018-01-01')
-    work_schedule = models.ForeignKey('WorkSchedule', verbose_name='Ponto', related_name="work_shifts")
+    work_schedule = models.ForeignKey('WorkSchedule', verbose_name='Ponto', related_name="work_shifts", on_delete=models.DO_NOTHING)
     allowance = models.CharField(verbose_name='Abonos', choices=ALLOWANCES, null=True, blank=True, max_length=2)
     reduced_day = models.BooleanField(verbose_name='Jornada reduzida', default=False)
 

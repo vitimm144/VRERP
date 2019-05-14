@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from products.models import Product, Sale, Stock, Price
+from products.models import Product, Sale, Stock, Price, Color
 from users.models import Employee, Career
 from django.contrib.auth.models import User
 
@@ -16,12 +16,38 @@ class ProductTestCase(APITestCase):
             user=self.user,
             token=self.user.auth_token
         )
+        self.color = Color.objects.create(code='00', name='neutra')
+
+    def test_create(self):
+        color = Color.objects.create(code='01' , name='vermelho')
+        self.assertTrue(color.pk)
+        data = {
+            "description": "Abacaxi",
+            "code": "003",
+            "size": "M",
+            "color": color.pk,
+            "products": [
+                {
+                    "value": "10.00",
+                }
+
+            ],
+
+        }
+        url = reverse('product-list')
+        response = self.client.post(
+            url,
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
     def test_create_with_price(self):
         data = {
             "description": "Cebola",
             "code": "002",
             "size": "P",
+            "color": self.color.pk,
             "products": [
                 {
                     "value": "20.00",
@@ -36,12 +62,14 @@ class ProductTestCase(APITestCase):
             url,
             data
         )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_edit_price(self):
         data = {
             "description": "Cebola",
             "code": "002",
+            "color": self.color.pk,
             "size": "P",
             "products": [
                 {
@@ -79,9 +107,12 @@ class StockTestCase(APITestCase):
             token=self.user.auth_token
         )
 
+        self.color = Color.objects.create(code='00', name='neutra')
+
         self.product = Product.objects.create(
             code="001",
             description='Tenis',
+            color=self.color,
             size='P'
 
         )
@@ -103,36 +134,32 @@ class StockTestCase(APITestCase):
 
 class SaleTestCase(APITestCase):
     user = {}
-    carrer = dict()
+    career = dict()
     employee = dict()
+    color = None
 
     def setUp(self):
         # Setting user credentials. See fixtures files for more details.
         self.user = User.objects.create_superuser(
             username='admin', email='vs@vs.com', password='123'
         )
+
         self.client.force_authenticate(
             user=self.user,
             token=self.user.auth_token
         )
+
+        self.color = Color.objects.create(code='00', name='neutra')
 
         self.career = Career.objects.create(
             title='Vendedora',
             description='Que vende'
         )
 
-        self.employee = Employee.objects.create(
-            name='Maria',
-            cpf='12388933478',
-            rg='76333552',
-            address='Rua José Bonifacio',
-            code='001',
-            salary=1340.21,
-            career=self.career
-        )
         data = {
             "description": "Jaqueta de couro",
             "code": "006",
+            "color": self.color.pk,
             "size": "P",
             "products": [
                 {
@@ -150,6 +177,7 @@ class SaleTestCase(APITestCase):
         data = {
             "description": "Jeans",
             "code": "007",
+            "color": self.color.pk,
             "enable_deduction": True,
             "size": "P",
             "products": [
@@ -166,9 +194,18 @@ class SaleTestCase(APITestCase):
             data
         )
 
+        self.employee = Employee.objects.create(
+            name='Maria',
+            cpf='12388933478',
+            rg='76333552',
+            address='Rua José Bonifacio',
+            code='001',
+            salary=1340.21,
+            career=self.career
+        )
+
 
     def test_create(self):
-
         response = self.client.get(reverse('product-list'))
         json_response = response.json()
         products = []
@@ -230,6 +267,7 @@ class SaleTestCase(APITestCase):
         data = {
             "description": "Casaco de couro",
             "code": "008",
+            "color": self.color.pk,
             "size": "M",
             "amount": 10,
             "products": [
@@ -316,6 +354,7 @@ class SaleTestCase(APITestCase):
         data = {
             "description": "Camisa Polo",
             "code": "010",
+            "color": self.color.pk,
             "enable_deduction": True,
             "size": "P",
             "amount": 10,
@@ -353,7 +392,7 @@ class SaleTestCase(APITestCase):
         sale = json_response.get('results')[0]
         self.assertEqual(len(sale.get('products')), 3)
 
-
+        # import ipdb; ipdb.set_trace()
         product_to_trade = sale['products'].pop()
 
         sale['products'].append(
@@ -375,18 +414,30 @@ class SaleTestCase(APITestCase):
             reverse('sale_trade'),
             data
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
         sales = Sale.objects.all()
         self.assertEqual(len(sales), 1)
+
         sale = sales[0]
         products = sale.products.all()
         self.assertEqual(len(products), 3)
+
         traded = sale.products_trade.all()
         self.assertEqual(len(traded), 1)
 
-        self.assertEqual(products[0].product.amount, 10)
-        self.assertEqual(products[1].product.amount, 9)
-        self.assertEqual(products[2].product.amount, 9)
+        for product in products:
+            self.assertEqual(product.product.amount, 9)
+
+        products = Product.objects.all()
+        self.assertEqual(len(products), 4)
+
+        self.assertEqual(products[2].amount, 10)
+
+    def test_abc(self):
+        self.assertTrue(True)
+
 
 
 

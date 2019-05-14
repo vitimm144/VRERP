@@ -160,13 +160,13 @@ REST_FRAMEWORK = {
     ),
     'PAGINATE_BY': 0,
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ),
     'DEFAULT_MODEL_SERIALIZER_CLASS':
         'rest_framework.serializers.ModelSerializer',
 
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10000000,
 
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'

@@ -23,3 +23,6 @@ class ProductTrade(models.Model):
 
     def __str__(self):
         return self.product.description
+
+    class Meta:
+        ordering = ["id"]

@@ -32,6 +32,9 @@ class ProductSale(models.Model):
     def __str__(self):
         return self.product.description
 
+    class Meta:
+        ordering = ["id"]
+
 
 
 @receiver(post_save, sender=ProductSale)

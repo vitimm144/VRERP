@@ -15,5 +15,8 @@ class Plot(models.Model):
         'Pay',
         related_name='plots',
         null=True,
-        blank=True
+        blank=True,
+        on_delete = models.DO_NOTHING
     )
+    class Meta:
+        ordering = ["id"]

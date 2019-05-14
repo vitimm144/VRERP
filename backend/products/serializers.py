@@ -81,6 +81,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'created',
             'modified',
             'price',
+            'color',
         )
 
     def create(self, validated_data):
