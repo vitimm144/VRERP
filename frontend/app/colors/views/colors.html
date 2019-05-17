@@ -1,0 +1,37 @@
+<div ui-view="form" ng-cloak ng-grid="color_ctrl.gridOptions">
+  <div  class="container-fluid">
+    <h1 class="page-header"> 
+      Cores
+      <a ui-sref="colors.new"> 
+        <i class="fa fa-plus-circle"></i> 
+      </a>
+    </h1>
+  </div>
+  <table datatable="ng" class="row-border hover">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nome</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="color in color_ctrl.colors">
+        <td>{{ color.code}}</td>
+        <td>{{ color.name}}</td>
+        <td>
+            
+          <button class="btn-primary" type="button" ng-click="color_ctrl.edit(color.id)">
+          Editar          
+          </button>
+          <button
+            type="button"
+            ng-click="color_ctrl.excluir('/api/colors/' + color.id)"
+            class="btn-danger"
+          > Excluir </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

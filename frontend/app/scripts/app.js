@@ -186,6 +186,38 @@ angular.module('frontendApp', [
           }
         }
       })
+      //COLORS
+      .state('colors', {
+        url: '/colors',
+        views:{
+          'content': {
+            templateUrl: url_prefix +  'colors/views/colors.html',
+            controller: 'ColorCtrl',
+            controllerAs: 'color_ctrl',
+            authorize: true
+          }
+        }
+      }).state('colors.new', {
+        url: '/new',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'colors/views/color_form.html',
+            controller: 'ColorEditCtrl',
+            controllerAs: 'color_edit_ctrl',
+            authorize: true
+          }
+        }
+      }).state('colors.edit', {
+        url: '/:careerId',
+        views:{
+          'form':{
+            templateUrl: url_prefix +  'colors/views/color_form.html',
+            controller: 'ColorEditCtrl',
+            controllerAs: 'color_edit_ctrl',
+            authorize: true
+          }
+        }
+      })
       //BEHAVIOR_SHEET
       .state('behavior_sheets', {
         url: '/behavior_sheets',
