@@ -15,7 +15,7 @@ import django_filters.rest_framework
 class ColorViewSet(viewsets.ModelViewSet):
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('created', 'code', 'name',)
 
@@ -23,7 +23,7 @@ class ColorViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('created', 'code', 'size',)
 
@@ -31,7 +31,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class SaleViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SaleSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_fields = ('status', 'client', 'saleswoman', 'user', 'user__username')
     search_fields = ('created',)
@@ -40,7 +40,7 @@ class SaleViewSet(viewsets.ModelViewSet):
 class StockViewSet(viewsets.ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('product', 'user', 'user__username')
 

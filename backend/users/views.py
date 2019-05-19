@@ -25,7 +25,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class CareerViewSet(viewsets.ModelViewSet):
     queryset = Career.objects.all()
     serializer_class = CareerSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('title',)
 
@@ -33,7 +33,7 @@ class CareerViewSet(viewsets.ModelViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('cpf', 'rg', 'code', 'career',)
 
@@ -41,7 +41,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 class BehaviorSheetViewSet(viewsets.ModelViewSet):
     queryset = BehaviorSheet.objects.all()
     serializer_class = BehaviorSheetSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('employee', 'behavior_type')
 
@@ -49,7 +49,7 @@ class BehaviorSheetViewSet(viewsets.ModelViewSet):
 class WorkScheduleViewSet(viewsets.ModelViewSet):
     queryset = WorkSchedule.objects.all()
     serializer_class = WorkScheduleSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('employee',)
 
@@ -57,6 +57,6 @@ class WorkScheduleViewSet(viewsets.ModelViewSet):
 class WorkShiftViewSet(viewsets.ModelViewSet):
     queryset = WorkShift.objects.all()
     serializer_class = WorkShiftSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('work_schedule',)

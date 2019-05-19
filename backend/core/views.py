@@ -7,6 +7,6 @@ import django_filters.rest_framework
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    http_method_names = ['get', 'post', 'head', 'put', 'patch']
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('name', 'email', 'cpf', 'rg', 'employee',)
