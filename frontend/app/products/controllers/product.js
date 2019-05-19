@@ -2,6 +2,7 @@ angular.module('frontendApp')
   .controller('ProductCtrl', function (
   $rootScope,
   $scope,
+  $state,
   $http,
   $transitions,
   AuthService,
@@ -11,6 +12,16 @@ angular.module('frontendApp')
 ) {
   var product_ctrl = this;
   var url = '/api/products';
+  
+  $http.get('/api/colors').then(function(data){
+    console.log(data);
+    product_ctrl.colors = {};
+    angular.forEach(data.data.results, function(color){
+      product_ctrl.colors[color.id] = color;
+    });
+//    console.log(product_ctrl.colors);
+  });
+  
   product_ctrl.gridOptions = {};
   console.log('products_ctrl');
   var update_grid = function(){
@@ -26,18 +37,13 @@ angular.module('frontendApp')
     
   update_grid();
   product_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar products');
     }); 
   }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
     
 });
 

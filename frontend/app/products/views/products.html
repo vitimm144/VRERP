@@ -12,6 +12,7 @@
       <tr>
         <th>Código</th>
         <th>Descrição</th>
+        <th>Cor</th>
         <th>Tamanho</th>
         <th>Quantidade</th>
         <th>Desconto habilitado</th>
@@ -22,6 +23,7 @@
       <tr ng-repeat="product in product_ctrl.products">
         <td>{{ product.code}}</td>
         <td>{{ product.description}}</td>
+        <td>{{ product_ctrl.colors[product.color].name }}</td>
         <td>{{ product.size}}</td>
         <td>{{ product.amount}}</td>
         <td>{{ product.enable_deduction?'Sim':'Não'}}</td>

@@ -30,6 +30,11 @@ angular.module('frontendApp')
     value : '',
   }
   
+  $http.get('/api/colors').then(function(data){
+    console.log(data);
+    product_edit_ctrl.colors = data.data.results;
+  });
+  
   if ($stateParams.productId){
     product_edit_ctrl.url += $stateParams.productId + '/';
     console.log('product id ', $stateParams.productId);
@@ -69,7 +74,7 @@ angular.module('frontendApp')
       file.upload.then(function (response) {
         var message = 'Operação realizada com sucesso';
         alertService.message(message, 'success');
-        $state.go( '^' );
+        $state.go( '^', {},  {reload: true});
       }, function (response) {
         if (response.status > 0)
           $scope.errorMsg = response.status + ': ' + response.data;
@@ -92,7 +97,7 @@ angular.module('frontendApp')
         function (response) {
           var message = 'Operação realizada com sucesso';
           alertService.message(message, 'success');
-          $state.go( '^' );
+          $state.go( '^', {},  {reload: true});
         }, 
         function (response) {
           var message = 'Erro na operação'

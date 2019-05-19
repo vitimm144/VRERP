@@ -38,7 +38,7 @@
               
               <textarea 
                 ng-model="product_edit_ctrl.product.description"
-                class="form-control">
+                class="form-control" required>
               </textarea>
             </div>
             <div class="form-group">
@@ -46,7 +46,7 @@
               
               <input 
                 ng-model="product_edit_ctrl.product.code"
-                class="form-control">
+                class="form-control" required>
             </div>
             <div class="form-group">
               <label>Preço</label>
@@ -55,7 +55,7 @@
                 name="price"
                 id="price"
                 ng-model="product_edit_ctrl.price.value"
-                class="form-control">
+                class="form-control" required>
             </div>
             
             <div class="form-group">
@@ -63,10 +63,20 @@
               
               <select
                 type="number"
+                required
                 ng-model="product_edit_ctrl.product.size"
                 class="form-control">
                   <option ng-repeat="size in product_edit_ctrl.sizes" >{{size}}</option>
                 </select>
+            </div>
+            <div class="form-group">
+              <label>Cor</label>
+              <select
+                ng-model="product_edit_ctrl.product.color"
+                ng-options="color.id as color.name for color in product_edit_ctrl.colors"
+                class="form-control"
+                required>
+              </select>
             </div>
             
             <div class="form-group">
