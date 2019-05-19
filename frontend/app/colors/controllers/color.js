@@ -31,18 +31,13 @@ angular.module('frontendApp')
   }
   
   color_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar colors');
     }); 
   }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
     
 });
 

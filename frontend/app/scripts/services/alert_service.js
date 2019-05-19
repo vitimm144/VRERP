@@ -15,6 +15,8 @@ angular.module('frontendApp').service(
   this.message = function(message, type){
     $rootScope.message = message;
     $rootScope.alertMessage = true;
+    $rootScope.type = type_dict[type];
+
     $timeout(function(){
       $rootScope.alertMessage = false;
       $rootScope.message = "";

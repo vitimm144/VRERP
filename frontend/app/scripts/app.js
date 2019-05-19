@@ -22,8 +22,18 @@ angular.module('frontendApp', [
     'datatables',
     'ui.bootstrap'
   ])
-.run(function ($rootScope,AuthService) {
+.run(function ($rootScope, AuthService, $state, $stateParams) {
   console.log('run');
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
+  $rootScope.$on('$locationChangeSuccess', function(evt) {
+      // Halt state change from even starting
+      evt.preventDefault();
+      // Perform custom logic
+//      var meetsRequirement = ...
+//      // Continue with the update and state transition if logic allows
+//      if (meetsRequirement) $urlRouter.sync();
+  });
 //  $rootScope.$on('$routeChangeStart', function (event, next, current) {
 //    console.log('$routeChangeStart');
 //    if (next.authorize) {

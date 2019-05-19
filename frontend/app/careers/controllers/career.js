@@ -23,26 +23,21 @@ angular.module('frontendApp')
       }, function(){
         console.log('erro ao pegar careers');
       });
-  } 
+  };
     
   update_grid();
   career_ctrl.edit = function(id){
-    $state.go('careers.edit', {"careerId":id});
-  }
+    $state.go('careers.edit', {"careerId":id}, {reload:true});
+  };
   
   career_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar careers');
     }); 
-  }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
+  };
     
 });
 

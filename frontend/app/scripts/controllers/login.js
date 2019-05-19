@@ -40,7 +40,7 @@ angular.module('frontendApp')
     });
     login_ctrl.user = {
       username : AuthService.getUserName()
-    }
+    };
      
     
     login_ctrl.login = function(callback, param){
@@ -84,6 +84,6 @@ angular.module('frontendApp')
 //          callback(param);
 //        }
       });
-    }
+    };
   });
 

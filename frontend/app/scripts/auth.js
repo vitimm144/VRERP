@@ -2,11 +2,11 @@ angular.module('frontendAuthApp', ['ngStorage',])
 .factory('AuthService', function ($localStorage, $q) {
   return {
     getToken : function () {
-              console.log('get token');
+//              console.log('get token');
       return $localStorage.token;
     },
     setToken: function (token) {
-              console.log('set token');
+//              console.log('set token');
       $localStorage.token = token;
     },
     setUserName: function (user) {

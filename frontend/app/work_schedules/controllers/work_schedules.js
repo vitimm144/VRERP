@@ -24,7 +24,7 @@ angular.module('frontendApp')
       }, function(){
         console.log('erro ao pegar work_schedules');
       });
-  } 
+  }; 
   $http.get('/api/employees').then(function(data){
     console.log(data);
     angular.forEach(data.data.results, function(result){
@@ -40,21 +40,16 @@ angular.module('frontendApp')
     
   update_grid();
   work_schedule_ctrl.edit = function(id){
-    $state.go('work_schedules.edit', {"workScheduleId": id})
-  }
+    $state.go('work_schedules.edit', {"workScheduleId": id}, { reload: true })
+  };
   work_schedule_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar work_schedules');
     }); 
-  }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
+  };
     
 });
 

@@ -144,7 +144,7 @@ angular.module('frontendApp')
 //      window.alert('ok');
       var message = 'Operação realizada com sucesso';
       alertService.message(message, 'success');
-      $state.go( '^' );
+      $state.go( '^', {},  {reload: true});
     }, function (response) {
       var message = 'Erro na operação'
       alertService.message(message, 'danger');

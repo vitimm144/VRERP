@@ -38,13 +38,13 @@ angular.module('frontendApp')
       function (response) {
         var message = 'Operação realizada com sucesso';
         alertService.message(message, 'success');
-        $state.go( '^' );
+        $state.go( '^', {},  {reload: true});
       }, function (response) {
         var message = 'Erro na operação'
         alertService.message(message, 'danger');
       }
     );
-  } 
+  }; 
   
 });
 

@@ -34,18 +34,13 @@ angular.module('frontendApp')
     $state.go('behavior_sheets.edit', {"behaviorSheetId": id})
   }
   behavior_sheet_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar behavior_sheets');
     }); 
   }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
     
 });
 

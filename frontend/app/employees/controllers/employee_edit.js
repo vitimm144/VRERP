@@ -62,7 +62,7 @@ angular.module('frontendApp')
       file.upload.then(function (response) {
         var message = 'Operação realizada com sucesso';
         alertService.message(message, 'success');
-        $state.go( '^' );
+        $state.go( '^', {},  {reload: true});
       }, function (response) {
         if (response.status > 0)
           $scope.errorMsg = response.status + ': ' + response.data;
@@ -85,7 +85,7 @@ angular.module('frontendApp')
         function (response) {
           var message = 'Operação realizada com sucesso';
           alertService.message(message, 'success');
-          $state.go( '^' );
+          $state.go( '^', {},  {reload: true});
         }, 
         function (response) {
           var message = 'Erro na operação'

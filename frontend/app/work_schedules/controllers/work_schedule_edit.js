@@ -16,7 +16,7 @@ angular.module('frontendApp')
     initialized_data.setHours(hour);
     initialized_data.setMinutes(minutes);
     initialized_data.setSeconds(seconds);
-    return initialized_data 
+    return initialized_data; 
   }
   var work_schedule_edit_ctrl = this;
   work_schedule_edit_ctrl.url = 'api/work_schedules/';
@@ -72,13 +72,13 @@ angular.module('frontendApp')
         parseInt(shitf_start[0]), 
         parseInt(shitf_start[1]),
         parseInt(shitf_start[2])
-      )
+      );
       shitf_end = shitf_end.split(':');
       work_schedule_edit_ctrl.work_schedule.shift_end = initialize_timer(
         parseInt(shitf_end[0]), 
         parseInt(shitf_end[1]),
         parseInt(shitf_end[2])
-      )
+      );
     });
   }else{
     var d = new Date();
@@ -98,12 +98,12 @@ angular.module('frontendApp')
     function (response) {
       var message = 'Operação realizada com sucesso';
       alertService.message(message, 'success');
-      $state.go( '^' );
+      $state.go( '^', {},  {reload: true});
     }, function (response) {
       var message = 'Erro na operação'
       alertService.message(message, 'danger');
     });
-  } 
+  }; 
   
 });
 

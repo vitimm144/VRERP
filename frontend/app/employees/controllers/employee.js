@@ -28,22 +28,17 @@ angular.module('frontendApp')
   update_grid();
   
   employee_ctrl.edit = function(id){
-    $state.go('employees.edit', {"employeeId":id});
-  }
+    $state.go('employees.edit', {"employeeId":id}, { reload: true });
+  };
   
   employee_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar employees');
     }); 
   };
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
     
 });
 

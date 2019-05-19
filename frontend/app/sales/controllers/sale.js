@@ -3,6 +3,7 @@ angular.module('frontendApp')
   $rootScope,
   $scope,
   $http,
+  $state,
   $transitions,
   AuthService,
   gridService,
@@ -16,7 +17,7 @@ angular.module('frontendApp')
   sale_ctrl.status = {
     "F":"Finalizada",
     "C":"Cancelada"
-  }
+  };
   console.log('sales_ctrl');
   var update_grid = function(){
     var result = gridService.update_grid(url)
@@ -27,23 +28,16 @@ angular.module('frontendApp')
       }, function(){
         console.log('erro ao pegar sales');
       });
-  } 
+  }; 
     
   update_grid();
   sale_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar sales');
     }); 
-  }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
-  
-    
+  };
 });
 

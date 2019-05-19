@@ -3,6 +3,7 @@ angular.module('frontendApp')
   $rootScope,
   $scope,
   $http,
+  $state,
   $transitions,
   AuthService,
   gridService,
@@ -10,7 +11,6 @@ angular.module('frontendApp')
   AUTH_LOGOUT_PATH
 ) {
   $rootScope.alertMessage = false;
-  
   var user_ctrl = this;
   var url = '/api/users';
   user_ctrl.gridOptions = {};
@@ -28,18 +28,13 @@ angular.module('frontendApp')
     
   update_grid();
   user_ctrl.excluir = function(url){
-   gridService.delete_data().then(
+   gridService.delete_data(url).then(
     function(){
-      update_grid();
+      $state.transitionTo($state.current, {}, { reload: true });
     }, function(){
       console.log('erro ao pegar users');
     }); 
   }
-  $transitions.onSuccess({}, function() {
-    console.log('Transition on success');
-    update_grid();
-    
-  });
 //  $scope.$on('event:loginConfirmed', function(evt){
 //      $scope.loggedIn = true;
 //  });
