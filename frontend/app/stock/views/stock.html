@@ -25,13 +25,11 @@
         <td>{{ stock.amount }}</td>
         <td>
             
-          <button class="btn-primary" type="button">
-            
-          <a
+          <button
             class="btn-primary"
-            ng-href="stock.edit({stockId:{{stock.id}}})"
-             > Editar </a>
-          </button>
+            ng-click="stock_ctrl.edit(stock.id)"
+            type="button"
+          > Editar </button>
           <button
             type="button"
             ng-click="stock_ctrl.excluir('/api/stocks/' + stock.id)"
@@ -39,12 +37,10 @@
           > Excluir </button>
           <button
             type="button"
-            
+            ng-click="stock_ctrl.transfer(stock.id)"
             class="btn-primary"
-          > <a
-            class="btn-primary"
-            ng-href="stock.transfer({stockId:{{stock.id}}})"
-             > Transferência </a> </button>
+          > 
+            Transferência </button>
         </td>
       </tr>
     </tbody>

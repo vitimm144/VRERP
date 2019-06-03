@@ -218,7 +218,7 @@ angular.module('frontendApp', [
           }
         }
       }).state('colors.edit', {
-        url: '/:careerId',
+        url: '/:colorId',
         views:{
           'form':{
             templateUrl: url_prefix +  'colors/views/color_form.html',

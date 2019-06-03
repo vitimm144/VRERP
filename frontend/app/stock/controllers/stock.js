@@ -34,6 +34,13 @@ angular.module('frontendApp')
       console.log('erro ao pegar stock');
     }); 
   };
+  
+  stock_ctrl.edit = function(id){
+    $state.go('stock.edit', {"stockId":id});
+  };
+  stock_ctrl.transfer = function(id){
+    $state.go('stock.transfer', {"stockId":id});
+  };
     
 });
 
