@@ -11,6 +11,16 @@ class Migration(migrations.Migration):
         ('products', '0017_auto_20190407_0040'),
     ]
 
+    def create_default_color(apps, schema_editor):
+        # We get the model from the versioned app registry;
+        # if we directly import it, it'll be the wrong version
+        Color = apps.get_model("products", "Color")
+        db_alias = schema_editor.connection.alias
+        Color.objects.using(db_alias).create(
+            name="Neutra",
+            code="000"
+        )
+
     operations = [
         migrations.CreateModel(
             name='Color',
@@ -27,4 +37,5 @@ class Migration(migrations.Migration):
                 'ordering': ['code'],
             },
         ),
+        migrations.RunPython(create_default_color),
     ]
