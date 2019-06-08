@@ -9,19 +9,27 @@ class ProductSale(models.Model):
         "Product",
         verbose_name="Produto",
         related_name="product_sale",
-        on_delete=models.DO_NOTHING
+        null=True,
+        on_delete=models.SET_NULL
     )
     price = models.ForeignKey(
         "Price",
         verbose_name="Preço",
         related_name="price_sale",
-        on_delete=models.DO_NOTHING
+        null=True,
+        on_delete=models.SET_NULL
     )
     amount = models.IntegerField(
         verbose_name='Quantidade',
         default=1
     )
-    product_sale = models.ForeignKey("Sale", related_name='products', default=None, on_delete=models.DO_NOTHING)
+    product_sale = models.ForeignKey(
+        "Sale",
+        related_name='products',
+        default=None,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     enable_deduction = models.BooleanField('Habilitar desconto', default=False)
 

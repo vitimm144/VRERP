@@ -92,6 +92,37 @@ class ProductTestCase(APITestCase):
         price = value.get('products')
         self.assertEqual(price[0].get('value'), "20.00")
 
+    def test_delete(self):
+        color = Color.objects.create(code='05' , name='laranja')
+        self.assertTrue(color.pk)
+        data = {
+            "description": "Laranja",
+            "code": "005",
+            "size": "P",
+            "color": color.pk,
+            "products": [
+                {
+                    "value": "10.99",
+                }
+
+            ],
+
+        }
+        url = reverse('product-list')
+        response = self.client.post(
+            url,
+            data
+        )
+        stock = response.data
+        pk = stock.get('id')
+
+        import ipdb; ipdb.set_trace()
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.delete(
+            reverse('product-detail', kwargs={'pk': pk})
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
 
 class StockTestCase(APITestCase):
     user = dict()

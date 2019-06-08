@@ -6,19 +6,27 @@ class ProductTrade(models.Model):
         "Product",
         verbose_name="Produto",
         related_name="product_trade",
-        on_delete=models.DO_NOTHING
+        null=True,
+        on_delete=models.SET_NULL
     )
     price = models.ForeignKey(
         "Price",
         verbose_name="Preço",
         related_name="price_trade",
-        on_delete=models.DO_NOTHING
+        null=True,
+        on_delete=models.SET_NULL
     )
     amount = models.IntegerField(
         verbose_name='Quantidade',
         default=1
     )
-    sale = models.ForeignKey("Sale", related_name='products_trade', default=None, on_delete=models.DO_NOTHING)
+    sale = models.ForeignKey(
+        "Sale",
+        related_name='products_trade',
+        default=None,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
     def __str__(self):

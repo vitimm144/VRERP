@@ -16,7 +16,9 @@ class Price(models.Model):
         "Product",
         verbose_name="Produto",
         related_name="products",
-        on_delete=models.DO_NOTHING
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
 
     def __str__(self):

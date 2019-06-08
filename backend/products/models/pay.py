@@ -22,7 +22,13 @@ class Pay(models.Model):
         null=True,
         blank=True
     )
-    pay_sale = models.ForeignKey("Sale", related_name='payments', default=None, on_delete=models.DO_NOTHING)
+    pay_sale = models.ForeignKey(
+        "Sale",
+        related_name='payments',
+        default=None,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         return str(self.value)

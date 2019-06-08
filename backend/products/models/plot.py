@@ -16,7 +16,7 @@ class Plot(models.Model):
         related_name='plots',
         null=True,
         blank=True,
-        on_delete = models.DO_NOTHING
+        on_delete = models.SET_NULL
     )
     class Meta:
         ordering = ["id"]
