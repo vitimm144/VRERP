@@ -14,7 +14,7 @@
     
     <!-- endbower -->
     <!-- endbuild -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <!--<link rel="stylesheet" href="bower_components/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" />-->
     <!--<link rel="stylesheet" href="bower_components/bootstrap/css/bootstrap.min.css" />-->
     
@@ -48,49 +48,43 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-      <div class="jumbotron" ng-show="!loggedIn">
-        <div class="container">
-          <div class="col-md-6 col-md-offset-3 ">
-            {{ 'You are logged: ' + loggedIn }}
-            <h2>login</h3>
+    <div class="jumbotron" ng-show="!loggedIn">
+      <div class="container">
+        <div class="col-md-4 col-md-offset-3">
 
-            <form class="form-horizontal" ng-submit="login_ctrl.login()">
-              <div class="form-group">
-              <label>Login</label>
-              <i class="icon-user"></i>
+          <form ng-submit="login_ctrl.login()">
+            <h2 class="text-center">Login do Sistema </h2>
+            <div class="form-group">
+              <i class="fa fa-user"></i>
               <input type="text"
-                     class="form-control"
-                     autofocus
-                     placeholder=""
-                     ng-model="login_ctrl.user.username"
+                class="form-control "
+                placeholder="Usuário"
+                required="required"
+                ng-model="login_ctrl.user.username"
               />
-              </div>
-              <div class="form-group">
-              <label>Senha</label>
-              <i class="icon-lock"></i>
+            </div>
+            <div class="form-group">
+              <i class="fa fa-lock"></i>
               <input type="password"
-                     class="form-control"
-                     placeholder=""
-                     ng-model="login_ctrl.user.password" ng-disabled="!login_ctrl.user.username"
-                     
+                class="form-control"
+                placeholder="Senha"
+                required="required"
+                ng-model="login_ctrl.user.password" ng-disabled="!login_ctrl.user.username"
+                redt-capslock-indicator
               />
-              </div>
-              <!-- /.options-login -->
-              <div class="form-actions">
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  ng-disabled="!login_ctrl.user.password">
-                  <span>Enter</span>
-                </button>
-              </div>
-            </form>
-
-          </div>
-          
+            </div>
+            <!-- /.options-login -->
+            <div class="form-actions">
+              <button
+                class="btn btn-primary"
+                type="submit"
+                ng-disabled="!login_ctrl.user.password">
+                <span>Entrar</span>
+              </button>
+            </div>
+          </form>
         </div>
-        
-
+      </div>
     </div>
     <div id="wrapper" ng-controller="MainCtrl as main">
 

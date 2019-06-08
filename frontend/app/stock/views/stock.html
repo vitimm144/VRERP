@@ -7,7 +7,16 @@
       </a>
     </h1>
   </div>
-  <table datatable="ng" class="row-border hover">
+  <table
+    datatable="ng"
+    class="row-border hover"
+    dt-instance="stock_ctrl.dtInstance"
+    dt-options="stock_ctrl.dtOptions"
+    dt-column-defs="stock_ctrl.dtColumnDefs"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+  >
     <thead>
       <tr>
         <th>Produto</th>

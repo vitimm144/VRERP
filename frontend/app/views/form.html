@@ -59,6 +59,17 @@
               </div>
               
             </div>
+            <div class="form-group">
+              <label>Habilitado</label>
+              <div class="checkbox">
+                <label>
+                  <input
+                     ng-model="user_edit_ctrl.user.is_active"
+                    type="checkbox" >
+                </label>
+              </div>
+              
+            </div>
 
             <button type="button" ng-click="user_edit_ctrl.submit()" class="btn btn-default">Enviar</button>
             <button type="reset" class="btn btn-default">Reset</button>
