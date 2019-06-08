@@ -113,10 +113,9 @@ class ProductTestCase(APITestCase):
             url,
             data
         )
-        stock = response.data
-        pk = stock.get('id')
+        product = response.data
+        pk = product.get('id')
 
-        import ipdb; ipdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         response = self.client.delete(
             reverse('product-detail', kwargs={'pk': pk})

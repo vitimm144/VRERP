@@ -11,7 +11,13 @@ class Client(models.Model):
     cep = models.CharField(verbose_name="CEP", max_length=16, null=True, blank=True)
     cellphone = models.TextField(null=True, blank=True, verbose_name="Celular")
     phone = models.TextField(null=True, blank=True, verbose_name="Telefone")
-    employee = models.ForeignKey('users.Employee', null=True, blank=True, verbose_name='Vendedora', on_delete=models.DO_NOTHING)
+    employee = models.ForeignKey(
+        'users.Employee',
+        null=True,
+        blank=True,
+        verbose_name='Vendedora',
+        on_delete=models.SET_NULL
+    )
     email = models.EmailField(verbose_name="Email", null=True, blank=True)
     facebook = models.CharField(verbose_name="Facebook", max_length=255, null=True, blank=True)
 

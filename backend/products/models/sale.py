@@ -36,13 +36,14 @@ class Sale(models.Model):
         null=True,
         blank=True,
         related_name="client",
-        on_delete=models.DO_NOTHING
+        on_delete=models.SET_NULL
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         default=1,
         verbose_name="Loja",
-        on_delete=models.DO_NOTHING
+        null=True,
+        on_delete=models.SET_NULL
     )
 
     @property
