@@ -4,4 +4,5 @@
 dist
 static
 /frontend/nbproject*
+*.bz2
 

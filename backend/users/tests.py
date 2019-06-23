@@ -31,3 +31,40 @@ class UsersTestCase(APITestCase):
             data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class EmployeeTestCase(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_superuser(
+            username='admin', email='vs@vs.com', password='123'
+        )
+        self.client.force_authenticate(
+            user=self.user,
+            token=self.user.auth_token
+        )
+
+    def test_create(self):
+        career = Career.objects.create(
+            title="Vendedor",
+            description="Efetua vendas"
+        )
+        self.assertTrue(career.pk)
+        data={
+            "name": "Victor",
+            "cpf": "123456",
+            "rg": "234534",
+            "salary": 700.00,
+            "address": "Rua jose das coves",
+            "email": "victor@mail.com",
+            "code": "001",
+            "career": career.pk,
+            "birthday": "1986-05-14",
+            "work_permit": "234532"
+
+        }
+        url = reverse('employee-list')
+        response = self.client.post(
+            url,
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

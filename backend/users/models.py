@@ -37,18 +37,25 @@ class Employee(models.Model):
     code = models.CharField(unique=True, verbose_name="Código", max_length=255)
     salary = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Salário")
     career = models.ForeignKey('Career', verbose_name='Função', null=True, on_delete=models.SET_NULL)
+    birthday = models.DateField(verbose_name='Data de Nascimento', null=True)
+    work_permit = models.CharField(verbose_name="Carteira de Trabalho", max_length=20, null=True)
+    email = models.EmailField(verbose_name="Email", null=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['name', 'code']
+        verbose_name = "Funcionário"
+        verbose_name_plural = "Funcionários"
 
 
 class BehaviorSheet(models.Model):
     BEHAVIOR_TYPES = (
         ('A', 'Advertência'),
+        ('AT', 'Atestado'),
         ('P', 'Prêmio'),
+        ('F', 'Falta'),
     )
 
     employee = models.ForeignKey('Employee', verbose_name='Funcionário', on_delete=models.CASCADE)
