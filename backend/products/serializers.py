@@ -28,6 +28,7 @@ class PriceSerializer(serializers.ModelSerializer):
             'id',
             'in_use',
             'value',
+            'whole_sale_value',
             'created',
             'modified',
         )
@@ -91,7 +92,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return self.create_update(instance, validated_data)
 
     def create_update(self, instance, validated_data):
-        products = validated_data.pop('products', [])
+        prices = validated_data.pop('products', [])
 
         if not instance:
 
@@ -100,17 +101,17 @@ class ProductSerializer(serializers.ModelSerializer):
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
 
-        if products:
+        if prices:
             with transaction.atomic():
                 ids = []
-                for x in products:
+                for x in prices:
                     identifier = x.get('id')
                     if identifier:
                         ids.append(identifier)
                 for price in instance.products.exclude(pk__in=ids):
                     price.set_in_use()
 
-                for product in products:
+                for product in prices:
                     if not product.get('id'):
                         Price.objects.create(
                             product=instance,
@@ -267,6 +268,7 @@ class ProductSaleSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'price_value',
+            'price_whole_sale',
         )
 
 
@@ -300,6 +302,7 @@ class SaleSerializer(serializers.ModelSerializer):
             'user_str',
             'created',
             'modified',
+            'whole_sale',
         )
         # depth = 1
 

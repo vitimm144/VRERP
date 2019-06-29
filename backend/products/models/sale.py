@@ -45,6 +45,7 @@ class Sale(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
+    whole_sale = models.BooleanField(verbose_name="Atacado?", default=False)
 
     @property
     def total(self):

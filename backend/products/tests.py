@@ -51,6 +51,7 @@ class ProductTestCase(APITestCase):
             "products": [
                 {
                     "value": "20.00",
+                    "whole_sale_value": "18.00",
                 }
 
             ],
@@ -62,8 +63,13 @@ class ProductTestCase(APITestCase):
             url,
             data
         )
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        data = response.json()
+        prices = data.get('products')
+        self.assertEqual(prices[0].get('value'), '20.00')
+        self.assertEqual(prices[0].get('whole_sale_value'), '18.00')
+
 
     def test_edit_price(self):
         data = {
@@ -291,6 +297,9 @@ class SaleTestCase(APITestCase):
         self.assertEqual(len(sale.get('payments')), 2)
         payment = sale.get('payments')[1]
         self.assertEqual(len(payment.get('plots')), 2)
+        self.assertEqual(sale.get('deduction'), '0.050')
+        self.assertEqual(sale.get('status'), 'F')
+        self.assertEqual(sale.get('whole_sale'), False)
 
 
     def test_trade(self):

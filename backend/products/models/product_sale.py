@@ -37,6 +37,10 @@ class ProductSale(models.Model):
     def price_value(self):
         return self.price.value or 0.00
 
+    @property
+    def price_whole_sale(self):
+        return self.price.whole_sale_price or 0.00
+
     def __str__(self):
         return self.product.description
 

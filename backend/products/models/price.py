@@ -11,7 +11,14 @@ class Price(models.Model):
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
     in_use = models.BooleanField(default=True, verbose_name="Em uso")
-    value = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Valor")
+    value = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Valor Varejo")
+    whole_sale_value = models.DecimalField(
+        decimal_places=2,
+        max_digits=7,
+        verbose_name="Valor Atacado",
+        default=0
+    )
+
     product = models.ForeignKey(
         "Product",
         verbose_name="Produto",
