@@ -28,7 +28,8 @@ angular.module('frontendApp')
   ];
   product_edit_ctrl.price = {
     value : '',
-  }
+    whole_sale_value : ''
+  };
   
   $http.get('/api/colors').then(function(data){
     console.log(data);
