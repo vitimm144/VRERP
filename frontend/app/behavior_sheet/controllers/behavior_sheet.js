@@ -56,16 +56,18 @@ angular.module('frontendApp')
       }, function(){
         console.log('erro ao pegar behavior_sheets');
       });
-  } 
+  };
   behavior_sheet_ctrl.behavior_types = {
-    "A": 'Advertência',
-    "P": 'Prêmio'
-  }
+    "A": "Advertência",
+    "P": "Prêmio",
+    "AT": "Atestado",
+    "F": "Falta"
+  };
     
   update_grid();
   behavior_sheet_ctrl.edit = function(id){
     $state.go('behavior_sheets.edit', {"behaviorSheetId": id})
-  }
+  };
   behavior_sheet_ctrl.excluir = function(url){
    gridService.delete_data(url).then(
     function(){
@@ -73,7 +75,7 @@ angular.module('frontendApp')
     }, function(){
       console.log('erro ao pegar behavior_sheets');
     }); 
-  }
+  };
     
 });
 
