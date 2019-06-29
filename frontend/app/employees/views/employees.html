@@ -29,7 +29,7 @@
       <tr ng-repeat="employee in employee_ctrl.employees">
         <td>{{ employee.code}}</td>
         <td>{{ employee.name}}</td>
-        <td>{{ employee.career}}</td>
+        <td>{{ employee_ctrl.careers[employee.career] }}</td>
         <td>
             
           <button

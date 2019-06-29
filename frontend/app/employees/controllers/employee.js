@@ -60,6 +60,15 @@ angular.module('frontendApp')
     
   update_grid();
   
+  $http.get('/api/careers').then(function(data){
+    employee_ctrl.careers = {};
+    angular.forEach(data.data.results, function(career){
+      employee_ctrl.careers[career.id] = career.title;
+    });
+    console.log(employee_ctrl.careers);
+    
+  });
+  
   employee_ctrl.edit = function(id){
     $state.go('employees.edit', {"employeeId":id}, { reload: true });
   };

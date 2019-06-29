@@ -19,12 +19,34 @@ angular.module('frontendApp')
   employee_edit_ctrl.careers = [];
   console.log('stateParams');
   console.log($stateParams);
-  
+
+  employee_edit_ctrl.clear = function() {
+    employee_edit_ctrl.employee.birthday = null;
+  };
+  employee_edit_ctrl.popup1 = {
+    opened: false
+  };
+  employee_edit_ctrl.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(1900, 1, 1),
+    startingDay: 1
+  };
+  employee_edit_ctrl.altInputFormats = ['M!/d!/yyyy'];
+   employee_edit_ctrl.open1 = function() {
+    employee_edit_ctrl.popup1.opened = true;
+  };
   $http.get('/api/careers').then(function(data){
     console.log(data);
     employee_edit_ctrl.careers = data.data.results;
   });
-  
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
   
   if ($stateParams.employeeId){
     employee_edit_ctrl.url += $stateParams.employeeId + '/';
@@ -34,6 +56,9 @@ angular.module('frontendApp')
       console.log(data);
       data.data.salary = data.data.salary.replace('.', ',');
       employee_edit_ctrl.employee = data.data;
+      employee_edit_ctrl.employee.birthday = new Date(
+        employee_edit_ctrl.employee.birthday
+      );
 //      employee_edit_ctrl.employee.salary.replace('.', ',');
     });
   }else{
@@ -42,7 +67,15 @@ angular.module('frontendApp')
   }
   
   employee_edit_ctrl.submit = function(file) {
-            console.log(file);
+    if(typeof employee_edit_ctrl.employee.birthday === "object"){
+      
+      employee_edit_ctrl.employee.birthday = 
+        employee_edit_ctrl.employee.birthday.toLocaleDateString('pt-br')
+        .split('/')
+        .reverse()
+        .join('-')
+    }
+    console.log(file);
     if(typeof employee_edit_ctrl.employee.salary === "string"){
       employee_edit_ctrl.employee.salary = parseFloat(
         employee_edit_ctrl.employee.salary.replace(',', '.')
