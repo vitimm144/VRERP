@@ -80,13 +80,16 @@
                 </select>
             </div>
             <div class="form-group">
-              <label>Cor</label>
-              <select
-                ng-model="product_edit_ctrl.product.color"
-                ng-options="color.id as color.name for color in product_edit_ctrl.colors"
-                class="form-control"
-                required>
-              </select>
+              <label>Cor</label> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#corModal">Criar cor</button>
+              <ui-select ng-model="product_edit_ctrl.product.color">
+                <ui-select-match>
+                  <span>{{ $select.selected.code}} - {{ $select.selected.name}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="color.id as color in (product_edit_ctrl.colors | filter: $select.search) track by color.code">
+                  <span>{{ color.code }} - {{ color.name }}</span>
+                </ui-select-choices>
+              </ui-select>
+              
             </div>
             
             <div class="form-group">
@@ -131,6 +134,54 @@
 
 
   </div>
+  <!-- Modal -->
+  <div id="corModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Cadastro de Cor</h4>
+        </div>
+        
+        <div class="row modal-dialog">
+          <div class="col-lg-12">
+            <form role="form">
+
+              <div class="form-group">
+                <label>Código</label>
+                <input
+                  ng-model="product_edit_ctrl.color.code"
+                  class="form-control"
+                >
+              </div>
+              <div class="form-group">
+                <label>Nome</label>
+
+                <textarea 
+                  ng-model="product_edit_ctrl.color.name"
+                  class="form-control"
+                >
+                </textarea>  
+              </div>
+              <button
+                type="button"
+                ng-click="product_edit_ctrl.submit_color()"
+                class="btn btn-default">Enviar</button>
+              <button type="reset" class="btn btn-default" >Limpar</button>
+
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 
 
 </div>

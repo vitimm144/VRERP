@@ -36,14 +36,21 @@
             <div class="form-group">
               
               <label>Produto</label>
-              
-              <select
+              <ui-select ng-model="stock_edit_ctrl.stock.product.id">
+                <ui-select-match>
+                  <span>{{ $select.selected.code}} - {{ $select.selected.description}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="product.id as product in (stock_edit_ctrl.products | filter: $select.search) track by product.code">
+                  <span>{{ product.code }} - {{ product.description }}</span>
+                </ui-select-choices>
+              </ui-select>
+<!--              <select
                 type="number"
                 ng-model="stock_edit_ctrl.stock.product.id"
-                ng-options="product.id as product.description for product in stock_edit_ctrl.products"
+                ng-options="product.id as (product.code + ' - ' + product.description) for product in stock_edit_ctrl.products"
                 class="form-control">
                   
-              </select>
+              </select>-->
             </div>
             <div class="form-group">
               

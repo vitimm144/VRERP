@@ -16,6 +16,8 @@ angular.module('frontendApp')
   product_edit_ctrl.base_url = 'api/products/';
   product_edit_ctrl.url = 'api/products/';
   product_edit_ctrl.file = null;
+  product_edit_ctrl.color_url = 'api/colors/';
+  product_edit_ctrl.color = {};
   console.log('stateParams');
   console.log($stateParams);
   
@@ -56,6 +58,24 @@ angular.module('frontendApp')
       enable_deduction : true
     };
   }
+  product_edit_ctrl.submit_color = function(){
+    result = formService.saveFormData(product_edit_ctrl.color, product_edit_ctrl.color_url);
+    result.then(
+    function (response) {
+//      window.alert('ok');
+      var message = 'Cor cadastrada com sucesso';
+      alertService.message(message, 'success');
+                      console.log(response);
+      product_edit_ctrl.colors.push(response.data);
+      product_edit_ctrl.product.color = response.data.id;
+      
+      $('#corModal').modal('hide');
+      
+    }, function (response) {
+      var message = 'Erro na operação'
+      alertService.message(message, 'danger');
+    });
+  }; 
   
   product_edit_ctrl.submit = function(file) {
     if($scope.product_form.price.$dirty){
