@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from products.models import Stock
+from products.models import Stock, ProductOperation
 
 
 class ProductSale(models.Model):
@@ -56,9 +56,12 @@ def save_sale(sender, instance, **kwargs):
     if created:
 
         try:
-            stock = Stock.objects.filter(product=instance.product, user=instance.product_sale.user)[0]
-            if stock:
-                stock.amount -= instance.amount
-                stock.save()
+            productOperation = ProductOperation.objects.create(
+                reason='V',
+                type='S',
+                store=instance.product_sale.user,
+                product=instance.product,
+                amount=instance.amount
+            )
         except Exception as e:
             print(e)

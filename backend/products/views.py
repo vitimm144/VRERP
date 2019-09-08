@@ -1,14 +1,16 @@
 from rest_framework import viewsets
-from users.serializers import UserSerializer
-from products.serializers import ProductSerializer, SaleSerializer, StockSerializer, PaySerializer, ColorSerializer
-from products.models import Product, Sale, Stock, ProductSale, ProductTrade, Pay, Color
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import permissions
+
+from products.serializers import ProductSerializer, SaleSerializer, StockSerializer, ColorSerializer, \
+    StockOperationSerializer
+from products.serializers import ProductOperationSerializer
+from products.models import Product, Sale, Stock, Color, ProductOperation, StockOperation
+
 from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db import transaction
 from pprint import pprint
+
 import django_filters.rest_framework
 
 
@@ -44,6 +46,19 @@ class StockViewSet(viewsets.ModelViewSet):
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('product', 'user', 'user__username')
 
+class ProductOperationViewSet(viewsets.ModelViewSet):
+    queryset = ProductOperation.objects.all()
+    serializer_class = ProductOperationSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('product', 'store', 'store__username', 'type', 'reason')
+
+class StockOperationViewSet(viewsets.ModelViewSet):
+    queryset = StockOperation.objects.all()
+    serializer_class = StockOperationSerializer
+    http_method_names = ['get', 'post', 'head', 'put', 'patch', 'delete']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('product_operation', 'stock' )
 
 class AvailabilityView(APIView):
     # permission_classes = (permissions.IsAuthenticated,)
@@ -73,27 +88,30 @@ class StockTransferView(APIView):
         product = stock.get('product')
         store = request.data.get('user')
         amount = request.data.get('amount')
+        store_from = stock.get('user')
         try:
             with transaction.atomic():
                 #verificar se existe o produto no estoque do usuario a ser transferido
-                stock_to_filter = Stock.objects.filter(product__id=product.get('id'), user__id=store)
-                if len(stock_to_filter) == 0:
-                    stock_to = Stock.objects.create(product_id=product.get('id'), user_id=store, amount=amount)
-                else:
-                    stock_to = stock_to_filter[0]
-                    stock_to.amount += amount
-                    stock_to.save()
+                ProductOperation.objects.create(
+                    reason='TF',
+                    type='E',
+                    store_id=store,
+                    product_id=product.get('id'),
+                    amount=amount
+                )
 
-                #decrementando o stock do produto
-                stock_from = Stock.objects.get(id=stock.get('id'))
-                stock_from.amount -= amount
-                stock_from.save()
+                ProductOperation.objects.create(
+                    reason='TF',
+                    type='S',
+                    store_id=store_from.get('id'),
+                    product_id=product.get('id'),
+                    amount=amount
+                )
+
         except Exception as e:
             content = {'success': False, 'message': e}
             print(e)
             return Response(status=400, data=content)
-
-        # import ipdb; ipdb.set_trace()
 
         content = {'success': True}
         return Response(status=200, data=content)

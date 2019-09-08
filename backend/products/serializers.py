@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from products.models import Product, ProductSale, ProductTrade
-from products.models import Price, Pay, Plot, Stock, Color
+from products.models import Price, Pay, Plot, Stock, Color, ProductOperation, StockOperation
 from products.models import Sale
 from django.db import transaction, IntegrityError
 from rest_framework import routers, serializers, viewsets
@@ -419,3 +419,31 @@ class SaleSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class ProductOperationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductOperation
+        fields = (
+            'id',
+            'product',
+            'amount',
+            'reason',
+            'type',
+            'store'
+        )
+        read_only_fields = (
+            'date',
+        )
+
+class StockOperationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockOperation
+        fields = (
+            'id',
+            'product',
+            'stock',
+        )
+        read_only_fields = (
+            'created',
+        )

@@ -33,6 +33,8 @@ from products.views import AvailabilityView
 from products.views import StockTransferView
 from products.views import SaleTradeView
 from products.views import ColorViewSet
+from products.views import ProductOperationViewSet
+from products.views import StockOperationViewSet
 
 
 router = routers.DefaultRouter()
@@ -47,6 +49,8 @@ router.register(r'stocks', StockViewSet)
 router.register(r'behavior_sheets', BehaviorSheetViewSet)
 router.register(r'work_schedules', WorkScheduleViewSet)
 router.register(r'work_shifts', WorkShiftViewSet)
+router.register(r'product_operations', ProductOperationViewSet)
+router.register(r'stock_operations', StockOperationViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
